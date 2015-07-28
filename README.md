@@ -209,7 +209,7 @@ Initial release
 
 ### Version 1.1 (2015-07-28) ###
 
-- Replace default Markov pronounceable generator with gibberish.
+- Replace default Markov pronounceable generator with gibberish
 - Rename Dictionary generator module
 - Add licence and licensing info
 - Improve usage description in README
