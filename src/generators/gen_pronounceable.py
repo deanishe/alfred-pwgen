@@ -20,11 +20,12 @@ from __future__ import (
 
 from collections import defaultdict
 import itertools
+import math
 import os
 import string
 import random
 
-from .base import PassGenBase
+from generators.base import PassGenBase, ENTROPY_PER_LEVEL
 
 
 # Markov chain code from
@@ -178,7 +179,16 @@ class PronounceableGenerator(PassGenBase):
 
         return self._generator
 
-    def password(self, length=30):
+    def _password_by_iterations(self, iterations):
+        """Return password using ``iterations`` iterations."""
+        words = []
+        gen = WordGenerator(self.sample)
+        words = itertools.islice(gen, iterations)
+        return '-'.join(words), self.entropy * iterations
+
+    def _password_by_length(self, length):
+        """Return password of length ``length``."""
+
         words = []
         pw_length = 0
         for word in self.generator:
@@ -189,11 +199,24 @@ class PronounceableGenerator(PassGenBase):
 
         pw = '-'.join(words)
 
-        # if pw_length > length:
-        #     pw = pw[:length]
-        #     pw = pw.rstrip('-')
-
         return pw, self.entropy * len(words)
+
+    def password(self, strength=None, length=None):
+        """Method to generate and return password.
+
+        Either ``strength`` or ``length`` must be specified.
+
+        Returns tuple: (password, entropy)
+
+        """
+
+        if strength is not None:
+            target_entropy = strength * ENTROPY_PER_LEVEL
+            iterations = int(math.ceil(target_entropy / self.entropy))
+            return self._password_by_iterations(iterations)
+
+        else:
+            return self._password_by_length(length)
 
 
 if __name__ == '__main__':

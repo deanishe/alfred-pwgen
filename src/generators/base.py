@@ -22,6 +22,8 @@ import abc
 import math
 import os
 
+ENTROPY_PER_LEVEL = 30
+
 # string.punctuation contains a few characters we don't want
 # like backslash and tilde
 punctuation = """!"#$%&'()*+,-./:;<=>?@[]^_{|}"""
@@ -31,12 +33,18 @@ class PassGenBase(object):
     """Base class for generators"""
     __metaclass__ = abc.ABCMeta
 
-    def password(self, length=30):
+    def password(self, strength=None, length=None):
         """Method to generate and return password.
+
+        Either ``strength`` or ``length`` must be specified.
 
         Returns tuple: (password, entropy)
 
         """
+
+        if strength is not None:
+            target_entropy = strength * ENTROPY_PER_LEVEL
+            length = int(math.ceil(target_entropy / self.entropy))
 
         chars = self.data
         pw = [chars[ord(c) % len(chars)] for c in os.urandom(length)]

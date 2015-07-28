@@ -11,7 +11,8 @@
 """pwgen.py command [options]
 
 Usage:
-    pwgen.py generate [-v|-q|-d] [<length>]
+    pwgen.py generate [-v|-q|-d] [<strength>]
+    pwgen.py generate [-v|-q|-d] --length [<length>]
     pwgen.py conf [-v|-q|-d] [<query>]
     pwgen.py (-h|--version)
 
@@ -32,14 +33,24 @@ import sys
 from docopt import docopt
 from workflow import Workflow, ICON_WARNING
 
-from generators import get_generators
+from generators import get_generators, ENTROPY_PER_LEVEL
 
 log = None
 
-DEFAULT_PW_LENGTH = 30
+DEFAULT_PW_LENGTH = 20
+DEFAULT_PW_STRENGTH = 3
+
+# Characters for strength bar
+BLOCK_FULL = '\u2589'
+BLOCK_75 = '\u258a'
+BLOCK_50 = '\u258c'
+BLOCK_25 = '\u258e'
+BLOCK_EMPTY = ''
 
 DEFAULT_SETTINGS = {
     'pw_length': DEFAULT_PW_LENGTH,
+    'pw_strength': DEFAULT_PW_STRENGTH,
+    'strength_bar': True,
     'generators': [
         'ascii',
         'alphanumeric',
@@ -55,6 +66,22 @@ UPDATE_SETTINGS = {
 }
 
 HELP_URL = ''
+
+
+def pw_strength_meter(entropy):
+    """Return 'graphical' bar of password strength."""
+    bar = ''
+    bars, rem = divmod(entropy / ENTROPY_PER_LEVEL, 1)
+    bar = BLOCK_FULL * int(bars)
+
+    if rem >= 0.75:
+        bar += BLOCK_75
+    elif rem >= 0.5:
+        bar += BLOCK_50
+    elif rem >= 0.25:
+        bar += BLOCK_25
+
+    return bar
 
 
 class PasswordApp(object):
@@ -95,23 +122,50 @@ class PasswordApp(object):
     def do_generate(self):
         """Generate and display passwords from active generators."""
         wf = self.wf
-        pw_length = self.args.get('<length>') or ''
-        pw_length = pw_length.strip()
+        args = self.args
+        mode = 'strength'
+        pw_length = None
+        pw_strength = None
 
-        if pw_length:
-            if not pw_length.isdigit():
-                wf.add_item('`{0}` is not a number'.format(pw_length),
-                            'Usage: pwgen [length]',
-                            icon=ICON_WARNING)
-                wf.send_feedback()
-                return 0
+        # Determine mode
+        if args.get('--length'):
+            mode = 'length'
+            pw_length = args.get('<length>') or ''
+            pw_length = pw_length.strip()
 
-            pw_length = int(pw_length)
+            if pw_length:
+                if not pw_length.isdigit():
+                    wf.add_item('`{0}` is not a number'.format(pw_length),
+                                'Usage: pwgen [length]',
+                                icon=ICON_WARNING)
+                    wf.send_feedback()
+                    return 0
 
-        pw_length = pw_length or wf.settings.get('pw_length',
-                                                 DEFAULT_PW_LENGTH)
+                pw_length = int(pw_length)
 
-        log.info('Password length: %d', pw_length)
+            pw_length = pw_length or wf.settings.get('pw_length',
+                                                     DEFAULT_PW_LENGTH)
+
+            log.info('Password length: %d', pw_length)
+
+        else:  # Default strength mode
+            pw_strength = args.get('<strength>') or ''
+            pw_strength = pw_strength.strip()
+
+            if pw_strength:
+                if not pw_strength.isdigit():
+                    wf.add_item('`{0}` is not a number'.format(pw_strength),
+                                'Usage: pwgen [length]',
+                                icon=ICON_WARNING)
+                    wf.send_feedback()
+                    return 0
+
+                pw_strength = int(pw_strength)
+
+            pw_strength = pw_strength or wf.settings.get('pw_strength',
+                                                         DEFAULT_PW_STRENGTH)
+
+            log.info('Password length: %d', pw_length)
 
         generators = get_generators()
 
@@ -131,8 +185,22 @@ class PasswordApp(object):
             log.debug('[%0.2f/%s] %s : %s',
                       g.entropy, g.id_, g.name, g.description)
             # log.debug('[%s] %s', g.id_, g.password())
-            pw, entropy = g.password(pw_length)
-            subtitle = 'Strength : %0.2f  // %s' % (entropy, g.description)
+            if mode == 'length':
+                pw, entropy = g.password(length=pw_length)
+                # subtitle = 'Strength : %0.2f  // %s' % (entropy, g.description)
+            else:
+                pw, entropy = g.password(strength=pw_strength)
+
+            if wf.settings.get('strength_bar'):
+                strength = pw_strength_meter(entropy)
+            else:
+                strength = 'Strength : %0.1f bits' % entropy
+
+            subtitle = ('%s // Length : %d  // %s' %
+                        (strength, len(pw), g.description))
+            # subtitle = ('Strength : %0.2f // Length : %d  // %s' %
+            #             (entropy, len(pw), g.description))
+
             wf.add_item(pw,
                         subtitle,
                         arg=pw, uid=g.id_,

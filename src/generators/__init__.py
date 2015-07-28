@@ -17,9 +17,9 @@ from __future__ import print_function, unicode_literals, absolute_import
 import logging
 import os
 
-from .base import PassGenBase
+from generators.base import PassGenBase, ENTROPY_PER_LEVEL
 
-__all__ = ['get_subclasses', 'get_generators']
+__all__ = ['get_subclasses', 'get_generators', 'ENTROPY_PER_LEVEL']
 
 _import_done = False
 

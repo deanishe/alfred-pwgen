@@ -16,7 +16,7 @@ from __future__ import print_function, unicode_literals, absolute_import
 
 import string
 
-from .base import PassGenBase, punctuation
+from generators.base import PassGenBase, punctuation
 
 
 class AsciiGenerator(PassGenBase):

@@ -13,9 +13,10 @@
 
 from __future__ import print_function, unicode_literals, absolute_import
 
+import math
 import random
 
-from .base import PassGenBase
+from generators.base import PassGenBase, ENTROPY_PER_LEVEL
 
 
 class WordlistGenerator(PassGenBase):
@@ -52,7 +53,15 @@ class WordlistGenerator(PassGenBase):
     def description(self):
         return 'Dictionary words'
 
-    def password(self, length=30):
+    def _password_by_iterations(self, iterations):
+        """Return password using ``iterations`` iterations."""
+        words = []
+        rand = random.SystemRandom()
+        words = [rand.choice(self.data) for i in range(iterations)]
+        return '-'.join(words), self.entropy * iterations
+
+    def _password_by_length(self, length):
+        """Return password of length ``length``."""
         words = []
         pw_length = 0
         rand = random.SystemRandom()
@@ -64,3 +73,20 @@ class WordlistGenerator(PassGenBase):
         pw = '-'.join(words)
 
         return pw, self.entropy * len(words)
+
+    def password(self, strength=None, length=None):
+        """Method to generate and return password.
+
+        Either ``strength`` or ``length`` must be specified.
+
+        Returns tuple: (password, entropy)
+
+        """
+
+        if strength is not None:
+            target_entropy = strength * ENTROPY_PER_LEVEL
+            iterations = int(math.ceil(target_entropy / self.entropy))
+            return self._password_by_iterations(iterations)
+
+        else:
+            return self._password_by_length(length)

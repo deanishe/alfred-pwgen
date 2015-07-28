@@ -6,6 +6,41 @@
 	<string>net.deanishe.alfred-pwgen</string>
 	<key>connections</key>
 	<dict>
+		<key>11DCEFA6-93E8-4C7A-ACB2-0AE37EE16C7A</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>02B5F9ED-692C-4360-8CE5-861DF999BB37</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>00F8B021-1903-4C35-8A0C-7D647485DE76</string>
+				<key>modifiers</key>
+				<integer>1048576</integer>
+				<key>modifiersubtext</key>
+				<string>Copy to clipboard and paste to frontmost application</string>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>677BDBCD-A330-4460-8C0C-9261842ED8DA</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>95DA10FB-2310-40DB-B8DB-04C7879F1C3F</string>
+				<key>modifiers</key>
+				<integer>1048576</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
 		<key>DBA8E550-5B42-4A57-AED0-8D70D4AC2327</key>
 		<array>
 			<dict>
@@ -85,11 +120,13 @@
 				<key>queuemode</key>
 				<integer>1</integer>
 				<key>runningsubtext</key>
-				<string>Crunching random data…</string>
+				<string>Crunching random bits…</string>
 				<key>script</key>
 				<string>/usr/bin/python pwgen.py generate "{query}"</string>
+				<key>subtext</key>
+				<string>Generate password of given strength</string>
 				<key>title</key>
-				<string>Generate Secure Password</string>
+				<string>Generate Password</string>
 				<key>type</key>
 				<integer>0</integer>
 				<key>withspace</key>
@@ -125,7 +162,7 @@
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>keyword</key>
-				<string>pwconf</string>
+				<string>pwlen</string>
 				<key>queuedelaycustom</key>
 				<integer>3</integer>
 				<key>queuedelayimmediatelyinitially</key>
@@ -135,13 +172,13 @@
 				<key>queuemode</key>
 				<integer>1</integer>
 				<key>runningsubtext</key>
-				<string>Loading Settings…</string>
+				<string>Crunching random bits…</string>
 				<key>script</key>
-				<string>/usr/bin/python pwgen.py conf "{query}"</string>
+				<string>/usr/bin/python pwgen.py generate --length "{query}"</string>
 				<key>subtext</key>
-				<string>View and edit workflow settings</string>
+				<string>Generate password of given length</string>
 				<key>title</key>
-				<string>Password Generator Configuration</string>
+				<string>Generate Password</string>
 				<key>type</key>
 				<integer>0</integer>
 				<key>withspace</key>
@@ -150,7 +187,7 @@
 			<key>type</key>
 			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
-			<string>76F9A947-6B5B-412D-AAAE-E0518115DE1D</string>
+			<string>11DCEFA6-93E8-4C7A-ACB2-0AE37EE16C7A</string>
 			<key>version</key>
 			<integer>0</integer>
 		</dict>
@@ -204,6 +241,43 @@
 			<key>version</key>
 			<integer>0</integer>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>pwconf</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Loading Settings…</string>
+				<key>script</key>
+				<string>/usr/bin/python pwgen.py conf "{query}"</string>
+				<key>subtext</key>
+				<string>View and edit workflow settings</string>
+				<key>title</key>
+				<string>Password Generator Configuration</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>76F9A947-6B5B-412D-AAAE-E0518115DE1D</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
 	</array>
 	<key>readme</key>
 	<string></string>
@@ -219,6 +293,11 @@
 			<key>ypos</key>
 			<real>10</real>
 		</dict>
+		<key>11DCEFA6-93E8-4C7A-ACB2-0AE37EE16C7A</key>
+		<dict>
+			<key>ypos</key>
+			<real>250</real>
+		</dict>
 		<key>677BDBCD-A330-4460-8C0C-9261842ED8DA</key>
 		<dict>
 			<key>ypos</key>
@@ -227,7 +306,7 @@
 		<key>76F9A947-6B5B-412D-AAAE-E0518115DE1D</key>
 		<dict>
 			<key>ypos</key>
-			<real>130</real>
+			<real>510</real>
 		</dict>
 		<key>95DA10FB-2310-40DB-B8DB-04C7879F1C3F</key>
 		<dict>
@@ -237,7 +316,7 @@
 		<key>DBA8E550-5B42-4A57-AED0-8D70D4AC2327</key>
 		<dict>
 			<key>ypos</key>
-			<real>10</real>
+			<real>130</real>
 		</dict>
 	</dict>
 	<key>webaddress</key>
