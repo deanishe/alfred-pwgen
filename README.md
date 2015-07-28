@@ -55,7 +55,7 @@ Fortunately, every added bit doubles the amount of entropy passwords, so 64 bits
 | 1       | 32&nbsp;bits          | 0.048 seconds                                 | Stuff you want to be super easy to crack? |
 | 2       | 64&nbsp;bits          | 6.5 years                                     | Web accounts, WiFi passwords              |
 | 3       | 96&nbsp;bits          | 280 million years                             | Almost anything                           |
-| 4       | 128&nbsp;bits         | billions of times the age of the universe | Encryption keys                           |
+| 4       | 128&nbsp;bits         | billions of times the age of the universe | Toppest-secret stuff, e.g. encryption keys                           |
 
 \* = based on 45 billions guesses per second.
 
