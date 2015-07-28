@@ -3,6 +3,8 @@
 
 Generate secure random passwords from Alfred. Uses `/dev/urandom` as source of entropy.
 
+![Alfred Password Generator Demo](./demo.gif "Alfred Password Generator Demo")
+
 
 ## Features ##
 
