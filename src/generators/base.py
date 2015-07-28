@@ -22,7 +22,7 @@ import abc
 import math
 import os
 
-ENTROPY_PER_LEVEL = 30
+ENTROPY_PER_LEVEL = 32
 
 # string.punctuation contains a few characters we don't want
 # like backslash and tilde
@@ -43,8 +43,7 @@ class PassGenBase(object):
         """
 
         if strength is not None:
-            target_entropy = strength * ENTROPY_PER_LEVEL
-            length = int(math.ceil(target_entropy / self.entropy))
+            length = int(math.ceil(strength / self.entropy))
 
         chars = self.data
         pw = [chars[ord(c) % len(chars)] for c in os.urandom(length)]

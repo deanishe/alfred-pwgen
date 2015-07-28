@@ -16,7 +16,7 @@ from __future__ import print_function, unicode_literals, absolute_import
 import math
 import random
 
-from generators.base import PassGenBase, ENTROPY_PER_LEVEL
+from generators.base import PassGenBase
 
 
 class WordlistGenerator(PassGenBase):
@@ -84,8 +84,7 @@ class WordlistGenerator(PassGenBase):
         """
 
         if strength is not None:
-            target_entropy = strength * ENTROPY_PER_LEVEL
-            iterations = int(math.ceil(target_entropy / self.entropy))
+            iterations = int(math.ceil(strength / self.entropy))
             return self._password_by_iterations(iterations)
 
         else:

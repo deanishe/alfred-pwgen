@@ -211,8 +211,7 @@ class PronounceableGenerator(PassGenBase):
         """
 
         if strength is not None:
-            target_entropy = strength * ENTROPY_PER_LEVEL
-            iterations = int(math.ceil(target_entropy / self.entropy))
+            iterations = int(math.ceil(strength / self.entropy))
             return self._password_by_iterations(iterations)
 
         else:

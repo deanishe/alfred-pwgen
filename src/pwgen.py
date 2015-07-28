@@ -8,12 +8,16 @@
 # Created on 2015-07-27
 #
 
-"""pwgen.py command [options]
+"""pwgen.py <command> [options]
+
+Generate secure passwords.
 
 Usage:
     pwgen.py generate [-v|-q|-d] [<strength>]
     pwgen.py generate [-v|-q|-d] --length [<length>]
-    pwgen.py conf [-v|-q|-d] [<query>]
+    pwgen.py conf [-v|-q|-d]
+    pwgen.py set [-v|-q|-d] <key> <value>
+    pwget.py reset [-v|-q|-d] <key>
     pwgen.py (-h|--version)
 
 Options:
@@ -84,6 +88,26 @@ def pw_strength_meter(entropy):
     return bar
 
 
+def entropy_from_strength(strength):
+    """Return bits of entropy for ``strength``.
+
+    If ``strength`` ends in 'b', treat as bits, else
+    treat as level and multiply by ``ENTROPY_PER_LEVEL``.
+
+    """
+
+    if not isinstance(strength, basestring):
+        strength = str(strength)
+    strength = strength.strip()
+    if not strength:
+        return None
+
+    if strength.endswith('b'):
+        return int(strength[:-1])
+
+    return int(strength) * ENTROPY_PER_LEVEL
+
+
 class PasswordApp(object):
     """Workflow application"""
 
@@ -123,6 +147,7 @@ class PasswordApp(object):
         """Generate and display passwords from active generators."""
         wf = self.wf
         args = self.args
+        query = ''
         mode = 'strength'
         pw_length = None
         pw_strength = None
@@ -132,6 +157,7 @@ class PasswordApp(object):
             mode = 'length'
             pw_length = args.get('<length>') or ''
             pw_length = pw_length.strip()
+            query = pw_length
 
             if pw_length:
                 if not pw_length.isdigit():
@@ -150,22 +176,22 @@ class PasswordApp(object):
 
         else:  # Default strength mode
             pw_strength = args.get('<strength>') or ''
-            pw_strength = pw_strength.strip()
+            query = pw_strength
+            try:
+                pw_strength = entropy_from_strength(pw_strength)
+            except ValueError:
+                wf.add_item('`{0}` is not a number'.format(pw_strength),
+                            'Usage: pwgen [length]',
+                            icon=ICON_WARNING)
+                wf.send_feedback()
+                return 0
 
-            if pw_strength:
-                if not pw_strength.isdigit():
-                    wf.add_item('`{0}` is not a number'.format(pw_strength),
-                                'Usage: pwgen [length]',
-                                icon=ICON_WARNING)
-                    wf.send_feedback()
-                    return 0
+            pw_strength = (
+                pw_strength or
+                entropy_from_strength(wf.settings.get('pw_strength',
+                                                      DEFAULT_PW_STRENGTH)))
 
-                pw_strength = int(pw_strength)
-
-            pw_strength = pw_strength or wf.settings.get('pw_strength',
-                                                         DEFAULT_PW_STRENGTH)
-
-            log.info('Password length: %d', pw_length)
+            log.info('Password strength: %d bits', pw_strength)
 
         generators = get_generators()
 
@@ -204,7 +230,7 @@ class PasswordApp(object):
             wf.add_item(pw,
                         subtitle,
                         arg=pw, uid=g.id_,
-                        autocomplete='{0}'.format(pw_length),
+                        autocomplete=query,
                         valid=True,
                         copytext=pw,
                         largetext=pw)
