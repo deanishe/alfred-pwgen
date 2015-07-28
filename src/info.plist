@@ -41,6 +41,17 @@
 				<string></string>
 			</dict>
 		</array>
+		<key>11F99880-019E-45DF-98D4-B539E3799209</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>86437401-8D94-40C2-9015-CD654C6CB51C</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
 		<key>76F9A947-6B5B-412D-AAAE-E0518115DE1D</key>
 		<array>
 			<dict>
@@ -52,11 +63,44 @@
 				<string></string>
 			</dict>
 		</array>
+		<key>7D8BF49A-E602-40BF-BDC5-F25C7D12E9CB</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>AA158B68-87F0-45A5-B7B2-7A3C5C5AC25E</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>86437401-8D94-40C2-9015-CD654C6CB51C</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>7D8BF49A-E602-40BF-BDC5-F25C7D12E9CB</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
 		<key>98EFEE54-A77F-43F1-832C-0EA448AEDE68</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
 				<string>AA158B68-87F0-45A5-B7B2-7A3C5C5AC25E</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>CB7811B1-3B34-463E-9039-C5ABDB488185</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>E1267099-BC5D-4878-B477-8D0EB671EC24</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -94,6 +138,28 @@
 				<string>95DA10FB-2310-40DB-B8DB-04C7879F1C3F</string>
 				<key>modifiers</key>
 				<integer>1048576</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>E1267099-BC5D-4878-B477-8D0EB671EC24</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>AA158B68-87F0-45A5-B7B2-7A3C5C5AC25E</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>E8031F55-6E9C-4712-9435-77EC8EBC7525</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>CB7811B1-3B34-463E-9039-C5ABDB488185</string>
+				<key>modifiers</key>
+				<integer>0</integer>
 				<key>modifiersubtext</key>
 				<string></string>
 			</dict>
@@ -285,6 +351,31 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<true/>
+				<key>output</key>
+				<integer>0</integer>
+				<key>removeextension</key>
+				<false/>
+				<key>sticky</key>
+				<false/>
+				<key>text</key>
+				<string>{query}</string>
+				<key>title</key>
+				<string>Configuration</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>AA158B68-87F0-45A5-B7B2-7A3C5C5AC25E</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>argumenttype</key>
 				<integer>1</integer>
 				<key>escaping</key>
@@ -322,25 +413,106 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>lastpathcomponent</key>
-				<false/>
-				<key>onlyshowifquerypopulated</key>
-				<true/>
-				<key>output</key>
-				<integer>0</integer>
-				<key>removeextension</key>
-				<false/>
-				<key>sticky</key>
-				<false/>
-				<key>text</key>
-				<string>{query}</string>
-				<key>title</key>
-				<string>Configuration Updated</string>
+				<key>triggerid</key>
+				<string>pw_length</string>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.output.notification</string>
+			<string>alfred.workflow.trigger.external</string>
 			<key>uid</key>
-			<string>AA158B68-87F0-45A5-B7B2-7A3C5C5AC25E</string>
+			<string>E8031F55-6E9C-4712-9435-77EC8EBC7525</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>keyword</key>
+				<string>:pwlength</string>
+				<key>subtext</key>
+				<string>Enter new default password length</string>
+				<key>text</key>
+				<string>Change Password Length</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>CB7811B1-3B34-463E-9039-C5ABDB488185</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>/usr/bin/python pwgen.py set pw_length {query}</string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>E1267099-BC5D-4878-B477-8D0EB671EC24</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>keyword</key>
+				<string>:pwstrength</string>
+				<key>subtext</key>
+				<string>Enter new default password strength</string>
+				<key>text</key>
+				<string>Change Password Strength</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>86437401-8D94-40C2-9015-CD654C6CB51C</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>triggerid</key>
+				<string>pw_strength</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.external</string>
+			<key>uid</key>
+			<string>11F99880-019E-45DF-98D4-B539E3799209</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>/usr/bin/python pwgen.py set pw_strength {query}</string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>7D8BF49A-E602-40BF-BDC5-F25C7D12E9CB</string>
 			<key>version</key>
 			<integer>0</integer>
 		</dict>
@@ -364,6 +536,11 @@
 			<key>ypos</key>
 			<real>250</real>
 		</dict>
+		<key>11F99880-019E-45DF-98D4-B539E3799209</key>
+		<dict>
+			<key>ypos</key>
+			<real>730</real>
+		</dict>
 		<key>677BDBCD-A330-4460-8C0C-9261842ED8DA</key>
 		<dict>
 			<key>ypos</key>
@@ -373,6 +550,16 @@
 		<dict>
 			<key>ypos</key>
 			<real>490</real>
+		</dict>
+		<key>7D8BF49A-E602-40BF-BDC5-F25C7D12E9CB</key>
+		<dict>
+			<key>ypos</key>
+			<real>730</real>
+		</dict>
+		<key>86437401-8D94-40C2-9015-CD654C6CB51C</key>
+		<dict>
+			<key>ypos</key>
+			<real>730</real>
 		</dict>
 		<key>95DA10FB-2310-40DB-B8DB-04C7879F1C3F</key>
 		<dict>
@@ -389,10 +576,25 @@
 			<key>ypos</key>
 			<real>490</real>
 		</dict>
+		<key>CB7811B1-3B34-463E-9039-C5ABDB488185</key>
+		<dict>
+			<key>ypos</key>
+			<real>610</real>
+		</dict>
 		<key>DBA8E550-5B42-4A57-AED0-8D70D4AC2327</key>
 		<dict>
 			<key>ypos</key>
 			<real>130</real>
+		</dict>
+		<key>E1267099-BC5D-4878-B477-8D0EB671EC24</key>
+		<dict>
+			<key>ypos</key>
+			<real>610</real>
+		</dict>
+		<key>E8031F55-6E9C-4712-9435-77EC8EBC7525</key>
+		<dict>
+			<key>ypos</key>
+			<real>610</real>
 		</dict>
 	</dict>
 	<key>webaddress</key>

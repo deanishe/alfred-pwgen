@@ -80,14 +80,25 @@ HELP_URL = 'https://github.com/deanishe/alfred-pwgen#alfred-password-generator'
 # AppleScript to call Alfred
 ALFRED_AS = """\
 tell application "Alfred 2"
-    search "{0}"
+    {0}
 end tell
 """
 
 
-def call_alfred(query):
+def call_alfred_search(query):
+    command = 'search "{0}"'.format(query)
     cmd = [b'/usr/bin/osascript', b'-e',
-           ALFRED_AS.format(query).encode('utf-8')]
+           ALFRED_AS.format(command).encode('utf-8')]
+    subprocess.call(cmd)
+
+
+def call_external_trigger(name, arg):
+    command = (
+        'tell application "Alfred 2" to run trigger "{0}"'
+        'in workflow "{1}" with argument "{2}"'
+    ).format(name, wf.bundleid, arg)
+    cmd = [b'/usr/bin/osascript', b'-e',
+           ALFRED_AS.format(command).encode('utf-8')]
     subprocess.call(cmd)
 
 
@@ -363,6 +374,31 @@ class PasswordApp(object):
 
     def do_set(self):
         """Set password strength/length"""
+        wf = self.wf
+        args = self.args
+        key = args.get('<key>')
+        value = args.get('<value>')
+        if not value:
+            return call_external_trigger(key, '')
+
+        if not value.isdigit():
+            msg = '`{0}` is not a number'.format(value)
+            log.critical(msg)
+            print('ERROR : {0}'.format(msg))
+            call_alfred_search(KEYWORD_CONF + ' ')
+            return 1
+
+        value = int(value)
+
+        if key == 'pw_strength':
+            wf.settings['pw_strength'] = value
+            print('Set default password strength to {0}'.format(value))
+        if key == 'pw_length':
+            wf.settings['pw_length'] = value
+            print('Set default password length to {0}'.format(value))
+
+        call_alfred_search(KEYWORD_CONF + ' ')
+        return 0
 
     def do_toggle(self):
         """Toggle generators on/off"""
@@ -391,7 +427,7 @@ class PasswordApp(object):
         wf.settings['generators'] = active_generators
 
         print("Turned generator '{0}' {1}".format(gen.name, mode))
-        call_alfred(KEYWORD_CONF)
+        call_alfred_search(KEYWORD_CONF + ' ')
         return 0
 
 
