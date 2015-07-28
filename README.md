@@ -3,7 +3,7 @@
 
 Generate secure random passwords from Alfred. Uses `/dev/urandom` as source of entropy.
 
-![Alfred Password Generator Demo](./demo.gif "Alfred Password Generator Demo")
+![Alfred Password Generator Demo][demo]
 
 
 ## Features ##
@@ -11,6 +11,11 @@ Generate secure random passwords from Alfred. Uses `/dev/urandom` as source of e
 - Passwords can be generated based on strength or length.
 - Offers multiple generators, including based on real words and pronounceable pseudo-words generated with Markov chains.
 - Shows the strength of each generated password.
+
+
+## Installation ##
+
+Download from the [GitHub releases][gh-releases] or [Packal][packal] and double-click the downloaded file to install.
 
 
 ## Usage ##
@@ -43,7 +48,7 @@ That depends on what you're using it for and how long you want it to remain secu
 
 The average number of guesses required to crack a password with *n* bits of entropy is 2<sup>n-1</sup>, so 2,147,483,647 guesses for a 32-bit password. Or **0.048 seconds** with the above hardware.
 
-Fortunately, every added bit doubles the number of possible passwords, so 64 bits is a good deal stronger: 6.5 **years** on average to guess on the same hardware.
+Fortunately, every added bit doubles the amount of entropy passwords, so 64 bits is a good deal stronger: 6.5 **years** on average to guess on the same hardware.
 
 | Level   | Min. entropy          | Time to guess&nbsp;\*                         | Application                               |
 | ------: | --------------------: | --------------:                               | ---------------------------               |
@@ -218,3 +223,8 @@ Initial release
 - Add generator descriptions to README
 - Add strength bar toggle to configuration
 - Improve filtering in configuration
+
+
+[demo]: https://github.com/deanishe/alfred-pwgen/raw/master/demo.gif "Alfred Password Generator Demo"
+[gh-releases]: https://github.com/deanishe/alfred-pwgen/releases
+[packal]: http://www.packal.org/workflow/secure-password-generator
