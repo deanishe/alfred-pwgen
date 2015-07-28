@@ -41,6 +41,28 @@
 				<string></string>
 			</dict>
 		</array>
+		<key>76F9A947-6B5B-412D-AAAE-E0518115DE1D</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>98EFEE54-A77F-43F1-832C-0EA448AEDE68</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>98EFEE54-A77F-43F1-832C-0EA448AEDE68</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>AA158B68-87F0-45A5-B7B2-7A3C5C5AC25E</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
 		<key>DBA8E550-5B42-4A57-AED0-8D70D4AC2327</key>
 		<array>
 			<dict>
@@ -244,6 +266,25 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>0</integer>
+				<key>script</key>
+				<string>/usr/bin/python pwgen.py {query}</string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>98EFEE54-A77F-43F1-832C-0EA448AEDE68</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>argumenttype</key>
 				<integer>1</integer>
 				<key>escaping</key>
@@ -278,6 +319,31 @@
 			<key>version</key>
 			<integer>0</integer>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<true/>
+				<key>output</key>
+				<integer>0</integer>
+				<key>removeextension</key>
+				<false/>
+				<key>sticky</key>
+				<false/>
+				<key>text</key>
+				<string>{query}</string>
+				<key>title</key>
+				<string>Configuration Updated</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>AA158B68-87F0-45A5-B7B2-7A3C5C5AC25E</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
 	</array>
 	<key>readme</key>
 	<string></string>
@@ -306,12 +372,22 @@
 		<key>76F9A947-6B5B-412D-AAAE-E0518115DE1D</key>
 		<dict>
 			<key>ypos</key>
-			<real>510</real>
+			<real>490</real>
 		</dict>
 		<key>95DA10FB-2310-40DB-B8DB-04C7879F1C3F</key>
 		<dict>
 			<key>ypos</key>
 			<real>370</real>
+		</dict>
+		<key>98EFEE54-A77F-43F1-832C-0EA448AEDE68</key>
+		<dict>
+			<key>ypos</key>
+			<real>490</real>
+		</dict>
+		<key>AA158B68-87F0-45A5-B7B2-7A3C5C5AC25E</key>
+		<dict>
+			<key>ypos</key>
+			<real>490</real>
 		</dict>
 		<key>DBA8E550-5B42-4A57-AED0-8D70D4AC2327</key>
 		<dict>

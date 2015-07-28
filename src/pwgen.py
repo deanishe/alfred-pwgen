@@ -15,9 +15,9 @@ Generate secure passwords.
 Usage:
     pwgen.py generate [-v|-q|-d] [<strength>]
     pwgen.py generate [-v|-q|-d] --length [<length>]
-    pwgen.py conf [-v|-q|-d]
-    pwgen.py set [-v|-q|-d] <key> <value>
-    pwget.py reset [-v|-q|-d] <key>
+    pwgen.py conf [-v|-q|-d] [<query>]
+    pwgen.py set [-v|-q|-d] <key> [<value>]
+    pwgen.py toggle [-v|-q|-d] <genid>
     pwgen.py (-h|--version)
 
 Options:
@@ -32,10 +32,11 @@ Options:
 from __future__ import print_function, unicode_literals, absolute_import
 
 import logging
+import subprocess
 import sys
 
 from docopt import docopt
-from workflow import Workflow, ICON_WARNING
+from workflow import Workflow, ICON_WARNING, ICON_HELP, ICON_SETTINGS
 
 from generators import get_generators, ENTROPY_PER_LEVEL
 
@@ -43,6 +44,11 @@ log = None
 
 DEFAULT_PW_LENGTH = 20
 DEFAULT_PW_STRENGTH = 3
+
+# Alfred keywords
+KEYWORD_GEN = 'pwgen'
+KEYWORD_LEN = 'pwlen'
+KEYWORD_CONF = 'pwconf'
 
 # Characters for strength bar
 BLOCK_FULL = '\u2589'
@@ -69,7 +75,20 @@ UPDATE_SETTINGS = {
     'github_slug': 'deanishe/alfred-pwgen'
 }
 
-HELP_URL = ''
+HELP_URL = 'https://github.com/deanishe/alfred-pwgen#alfred-password-generator'
+
+# AppleScript to call Alfred
+ALFRED_AS = """\
+tell application "Alfred 2"
+    search "{0}"
+end tell
+"""
+
+
+def call_alfred(query):
+    cmd = [b'/usr/bin/osascript', b'-e',
+           ALFRED_AS.format(query).encode('utf-8')]
+    subprocess.call(cmd)
 
 
 def pw_strength_meter(entropy):
@@ -142,6 +161,10 @@ class PasswordApp(object):
             return self.do_generate()
         elif args.get('conf'):
             return self.do_conf()
+        elif args.get('toggle'):
+            return self.do_toggle()
+        elif args.get('set'):
+            return self.do_set()
 
     def do_generate(self):
         """Generate and display passwords from active generators."""
@@ -151,6 +174,12 @@ class PasswordApp(object):
         mode = 'strength'
         pw_length = None
         pw_strength = None
+
+        if wf.update_available:
+            wf.add_item('An Update is Available',
+                        '↩ or ⇥ to install update',
+                        autocomplete='workflow:update',
+                        icon='icons/update-available.icns')
 
         # Determine mode
         if args.get('--length'):
@@ -240,6 +269,130 @@ class PasswordApp(object):
 
     def do_conf(self):
         """Show configuration options"""
+        args = self.args
+        wf = self.wf
+        query = args.get('<query>')
+        options = []
+
+        # Help file
+        options.append(
+            {
+                'title': 'Open Help',
+                'subtitle': 'View online help in your browser',
+                'autocomplete': 'workflow:help',
+                'icon': ICON_HELP,
+            }
+        )
+
+        # Update status
+        if wf.update_available:
+            options.append(
+                {
+                    'title': 'An Update is Available',
+                    'subtitle': '↩ or ⇥ to install update',
+                    'autocomplete': 'workflow:update',
+                    'icon': 'icons/update-available.icns',
+                }
+            )
+        else:
+            options.append(
+                {
+                    'title': 'No Update Available',
+                    'subtitle': '↩ or ⇥ to check for an update',
+                    'autocomplete': 'workflow:update',
+                    'icon': 'icons/update-none.icns',
+                }
+            )
+
+        # Settings
+        options.append(
+            {
+                'title': 'Default Password Strength : {0}'.format(
+                    wf.settings.get('pw_strength')),
+                'subtitle': '↩ or ⇥ to change',
+                'arg': 'set pw_strength',
+                'valid': True,
+                'icon': ICON_SETTINGS,
+            }
+        )
+
+        options.append(
+            {
+                'title': 'Default Password Length : {0}'.format(
+                    wf.settings.get('pw_length')),
+                'subtitle': '↩ or ⇥ to change',
+                'arg': 'set pw_length',
+                'valid': True,
+                'icon': ICON_SETTINGS,
+            }
+        )
+
+        # Generators
+
+        generators = get_generators()
+        active_generators = wf.settings.get('generators', [])
+
+        for gen in generators:
+            if gen.id_ in active_generators:
+                icon = 'icons/toggle_on.icns'
+            else:
+                icon = 'icons/toggle_off.icns'
+            options.append(
+                {
+                    'title': 'Generator : {0}'.format(gen.name),
+                    'subtitle': gen.description,
+                    'arg': 'toggle {0}'.format(gen.id_),
+                    'valid': True,
+                    'icon': icon,
+                }
+            )
+
+        if query:
+            options = wf.filter(query, options, key=lambda d: d.get('title'))
+
+        if not options:
+            wf.add_item('No matching items',
+                        'Try a different query',
+                        icon=ICON_WARNING)
+
+        for opt in options:
+            wf.add_item(**opt)
+
+        wf.send_feedback()
+        return 0
+
+    def do_set(self):
+        """Set password strength/length"""
+
+    def do_toggle(self):
+        """Toggle generators on/off"""
+        wf = self.wf
+        args = self.args
+        gen_id = args.get('<genid>')
+        gen = None
+        for g in get_generators():
+            if g.id_ == gen_id:
+                gen = g
+                break
+        if not gen:
+            log.critical('Unknown generator : %s', gen_id)
+            return 1
+
+        active_generators = wf.settings.get('generators', [])
+        if gen_id in active_generators:
+            log.debug('Turning generator `%s` off...', gen.name)
+            active_generators.remove(gen_id)
+            mode = 'off'
+        else:
+            log.debug('Turning generator `%s` on...', gen.name)
+            active_generators.append(gen_id)
+            mode = 'on'
+        log.debug('Active generators : %s', active_generators)
+        wf.settings['generators'] = active_generators
+
+        print("Turned generator '{0}' {1}".format(gen.name, mode))
+        call_alfred(KEYWORD_CONF)
+        return 0
 
 
 def main(wf):
@@ -249,6 +402,8 @@ def main(wf):
 
 if __name__ == '__main__':
     wf = Workflow(
-        default_settings=DEFAULT_SETTINGS)
+        default_settings=DEFAULT_SETTINGS,
+        update_settings=UPDATE_SETTINGS,
+        help_url=HELP_URL)
     log = wf.logger
     sys.exit(wf.run(main))
