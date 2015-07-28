@@ -52,7 +52,7 @@ class AlphanumGenerator(PassGenBase):
 
     @property
     def description(self):
-        return 'ASCII characters without punctuation'
+        return 'ASCII characters, no punctuation'
 
     @property
     def data(self):
@@ -72,7 +72,7 @@ class AlphanumClearGenerator(PassGenBase):
 
     @property
     def description(self):
-        return 'ASCII characters without confusing characters or punctuation'
+        return 'ASCII characters, no confusing characters or punctuation'
 
     @property
     def data(self):

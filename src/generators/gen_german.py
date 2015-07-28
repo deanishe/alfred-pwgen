@@ -15,7 +15,7 @@ Password genrators based on the German alphabet.
 from __future__ import print_function, unicode_literals, absolute_import
 
 from .gen_basic import AsciiGenerator, AlphanumGenerator
-from .gen_pronounceable import PronounceableGenerator
+from .gen_pronounceable_markov import PronounceableMarkovGenerator
 
 
 class GermanGenerator(AsciiGenerator):
@@ -60,7 +60,7 @@ class GermanAlphanumericGenerator(AlphanumGenerator):
         return super(GermanAlphanumericGenerator, self).data + german_chars
 
 
-class GermanPronounceableGenerator(PronounceableGenerator):
+class GermanPronounceableGenerator(PronounceableMarkovGenerator):
     """Pronounceable German passwords based on Markov chains."""
 
     _sample_file = 'german.txt'
@@ -71,7 +71,7 @@ class GermanPronounceableGenerator(PronounceableGenerator):
 
     @property
     def name(self):
-        return 'German Pronounceable'
+        return 'German Pronounceable Markov'
 
     @property
     def description(self):

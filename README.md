@@ -1,7 +1,7 @@
 
 # Alfred Password Generator #
 
-Generate secure random passwords from Alfred.
+Generate secure random passwords from Alfred. Uses `/dev/urandom` as source of entropy.
 
 
 ## Features ##
@@ -14,25 +14,32 @@ Generate secure random passwords from Alfred.
 ## Usage ##
 
 - `pwgen [<strength>]` — Generate passwords of specified strength. Default is `3` (96 bits of entropy). See [Password strength](#password-strength) for details.
+    - `↩` or `⌘+C` — Copy the selected password to the clipboard.
+    - `⌘+↩` — Copy the selected password to the clipboard and paste it to the frontmost application.
+    - `⌘+L` — Show the selected password in Alfred's Large Text window.
 - `pwlen [<length>]` — Generate passwords of specified length. Default is `20`. See [Password strength](#password-strength) for details.
-- `pwconf` — View and edit workflow settings. See [Configuration](configuration) for details.
+    - `↩` or `⌘+C` — Copy the selected password to the clipboard.
+    - `⌘+↩` — Copy the selected password to the clipboard and paste it to the frontmost application.
+    - `⌘+L` — Show the selected password in Alfred's Large Text window.
+- `pwconf [<query>]` — View and edit workflow settings. See [Configuration](#configuration) for details.
 
 **Note:** Word-based generators may provide passwords that are slightly longer than `<length>`.
 
 
 ## Password strength ##
 
-Passwords can be specified either by strength or length. The default strength is `3`, which is approx. 90 bits of entropy (each level is 32 bits). You may also specify the desired number of bits by appending `b` to your input, e.g. `pwgen 128b` will provide at least 128 bits of entropy.
+Passwords can be specified either by strength or length. The default strength is `3`, which is at least 96 bits of entropy (each level is 32 bits). You may also specify the desired number of bits by appending `b` to your input, e.g. `pwgen 128b` will provide at least 128 bits of entropy.
 
 Default length is 20 characters, which can provide ~50 to ~130 bits of entropy depending on generator.
 
 Each password has its strength in the result subtitle. This is shown either as a bar or in bits of entropy, depending on your settings. Each full block in the bar represents 30 bits of entropy.
 
+
 ### How strong should my passwords be? ###
 
 That depends on what you're using it for and how long you want it to remain secure. As of 2015, custom password-guessing hardware (built from standard PC components) can guess **&gt;45 billion passwords per second.**
 
-The average number of guesses required to crack a password *n* bits is 2<sup>n-1</sup>, so 2,147,483,647 guesses for a 32-bit password. Or **0.048 seconds** with the above hardware.
+The average number of guesses required to crack a password with *n* bits of entropy is 2<sup>n-1</sup>, so 2,147,483,647 guesses for a 32-bit password. Or **0.048 seconds** with the above hardware.
 
 Fortunately, every added bit doubles the number of possible passwords, so 64 bits is a good deal stronger: 6.5 **years** on average to guess on the same hardware.
 
@@ -50,6 +57,13 @@ The default password strength level of 3 (96 bits) provides very secure password
 The default password length of 20 characters provides reasonably to very secure passwords, depending on the generator.
 
 
+#### Displayed strength ####
+
+By default, the strength of generated passwords is shown as a bar in the result subtitle. Each full block represents 32 bits of entropy, so 2 blocks represents a pretty secure password, 3 or more a very secure password.
+
+You can have the precise number of bits displayed instead by toggling the "Strength Bar" setting in the [Configuration](#configuration) (keyword `pwconf`).
+
+
 #### How can passwords of the same strength have different levels of security? ####
 
 Passwords of the same length (or even the self-same password) generated using different techniques have different strengths because the strength is determined by the permutations in the algorithm and the password length.
@@ -61,4 +75,144 @@ See [Password strength on Wikipedia](https://en.wikipedia.org/wiki/Password_stre
 
 ## Configuration ##
 
-Not implemented yet.
+Access the configuraton options with the `pwconf` keyword. You can use an optional query to filter the available options, e.g. use `pwconf gen` to show only the available generators.
+
+The following configuraton options are available:
+
+
+### Open Help ###
+
+Action this item to open this README in your browser.
+
+
+### An Update is Available / No Update is Available ###
+
+The workflow checks for a new version once a day. If one is available, "An Update is Available" will be shown. Action this item to install the update.
+
+If no update is available, "No Update is Available" will be shown. Action this item to force a check for an update.
+
+
+### Default Password Strength ###
+
+The default strength for passwords generated with `pwgen`. For strength *n*, passwords will have *n\*32* bits of entropy. Default is `3`, which should be proof against anything but the NSA. `4` will generate extremely secure passwords.
+
+Action this item to enter a new default strength.
+
+
+### Default Password Length ###
+
+The default length in characters for passwords generated with `pwlen`. The default of `20` provides passwords that are reasonably to very secure, depending on the generator.
+
+Action this item to enter a new default length.
+
+
+### Strength Bar ###
+
+By default, password strength is indicated by a number of blocks. Each full block represents 32 bits of entropy, so 3 blocks is secure, 4 is very secure. Less that 3 blocks should be avoided.
+
+Alternatively, strength can be shown as the number of bits of entropy.
+
+Action this item to toggle the strength bar on/off.
+
+
+### Generators ###
+
+All the available generators are listed below the other options.
+
+Active generators have a checked green circle as their icon, inactive ones have an empty red circle icon.
+
+Action a generator to toggle it on or off.
+
+## Built-in generators ##
+
+The workflow includes 10 built-in generators, of which 6 are active by default. You can activate/deactivate them in the [Configuration](#configuration).
+
+
+### Active generators ###
+
+These generators are active by default.
+
+#### ASCII Generator ####
+
+Generates passwords based on all ASCII characters, minus a few punctuation marks that can be hard to type, such as `\\`, `\``, `~`.
+
+
+#### Alphanumeric Generator ####
+
+Generates passwords from ASCII letters and digits. No punctuation.
+
+
+#### Clear Alphanumeric Generator ####
+
+Generates passwords from ASCII letters and digits, excluding easily-confused characters `1`, `l`, `O`, `0` (lowercase L, uppercase O, the digits 1 and 0).
+
+
+#### Numeric Generator ####
+
+Generates digit-only passwords.
+
+
+#### Pronounceable Nonsense Generator ####
+
+Generates pronounceable passwords based on nonsense words. Based on [this GitHub comment](http://stackoverflow.com/a/5502875).
+
+
+#### Dictionary Generator ####
+
+Generates passwords based on the words in `/usr/share/dict/words`.
+
+
+### Inactive generators ###
+
+These generators are inactive by default. They can be turned on in the [Configuration](#configuration).
+
+
+#### Pronounceable Markov Generator ####
+
+Generates semi-pronounceable passwords based on Markov chains and the start of *A Tale of Two Cities*.
+
+Has slightly more entropy than the [Pronounceable Nonsense generator](#pronounceable-nonsense-generator), but the passwords aren't quite as pronounceable.
+
+
+#### German Generator ####
+
+Generate passwords using all ASCII characters (including punctuation), plus German characters (esset, umlauts).
+
+
+#### German Alphanumeric Generator ####
+
+Generate passwords using all ASCII characters (without punctuation), plus German characters (esset, umlauts).
+
+
+#### German Pronounceable Markov Generator ####
+
+Generates semi-pronounceable passwords based on Markov chains and the start of *Buddenbrooks*.
+
+
+## Licensing, thanks ##
+
+This workflow is released under the [MIT Licence](http://opensource.org/licenses/MIT), which is included as the LICENCE file.
+
+It is heavily based on the [Alfred-Workflow](https://github.com/deanishe/alfred-workflow) library, also released under the MIT Licence.
+
+The workflow icon is from the [IcoMoon](https://icomoon.io/) webfont \([licence](https://icomoon.io/#termsofuse)\).
+
+The other icons are based on the [Font Awesome](http://fortawesome.github.io/Font-Awesome/) webfont \([licence](http://scripts.sil.org/OFL)\).
+
+
+## Changelog ##
+
+### Version 1.0 (2015-07-28) ###
+
+Initial release
+
+
+### Version 1.1 (2015-07-28) ###
+
+- Replace default Markov pronounceable generator with gibberish.
+- Rename Dictionary generator module
+- Add licence and licensing info
+- Improve usage description in README
+- Add generator descriptions to README
+- Add strength bar toggle to configuration
+- Improve filtering in configuration

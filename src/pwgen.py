@@ -338,6 +338,21 @@ class PasswordApp(object):
             }
         )
 
+        # Strength bar
+        if wf.settings.get('strength_bar'):
+            icon = 'icons/toggle_on.icns'
+        else:
+            icon = 'icons/toggle_off.icns'
+        options.append(
+            {
+                'title': 'Strength Bar',
+                'subtitle': 'Show password strength as a bar, not bits',
+                'arg': 'toggle strength_bar',
+                'valid': True,
+                'icon': icon,
+            }
+        )
+
         # Generators
 
         generators = get_generators()
@@ -359,7 +374,8 @@ class PasswordApp(object):
             )
 
         if query:
-            options = wf.filter(query, options, key=lambda d: d.get('title'))
+            options = wf.filter(query, options, key=lambda d: d.get('title'),
+                                min_score=30)
 
         if not options:
             wf.add_item('No matching items',
@@ -405,28 +421,42 @@ class PasswordApp(object):
         wf = self.wf
         args = self.args
         gen_id = args.get('<genid>')
-        gen = None
-        for g in get_generators():
-            if g.id_ == gen_id:
-                gen = g
-                break
-        if not gen:
-            log.critical('Unknown generator : %s', gen_id)
-            return 1
 
-        active_generators = wf.settings.get('generators', [])
-        if gen_id in active_generators:
-            log.debug('Turning generator `%s` off...', gen.name)
-            active_generators.remove(gen_id)
-            mode = 'off'
-        else:
-            log.debug('Turning generator `%s` on...', gen.name)
-            active_generators.append(gen_id)
-            mode = 'on'
-        log.debug('Active generators : %s', active_generators)
-        wf.settings['generators'] = active_generators
+        # Strength bar toggle
+        if gen_id == 'strength_bar':
+            if wf.settings.get('strength_bar'):
+                log.debug('Turning strength bar off...')
+                wf.settings['strength_bar'] = False
+                mode = 'off'
+            else:
+                log.debug('Turning strength bar on...')
+                wf.settings['strength_bar'] = True
+                mode = 'on'
+            print('Turned strength bar {0}'.format(mode))
 
-        print("Turned generator '{0}' {1}".format(gen.name, mode))
+        else:  # Generator toggles
+            gen = None
+            for g in get_generators():
+                if g.id_ == gen_id:
+                    gen = g
+                    break
+            if not gen:
+                log.critical('Unknown generator : %s', gen_id)
+                return 1
+
+            active_generators = wf.settings.get('generators', [])
+            if gen_id in active_generators:
+                log.debug('Turning generator `%s` off...', gen.name)
+                active_generators.remove(gen_id)
+                mode = 'off'
+            else:
+                log.debug('Turning generator `%s` on...', gen.name)
+                active_generators.append(gen_id)
+                mode = 'on'
+            log.debug('Active generators : %s', active_generators)
+            wf.settings['generators'] = active_generators
+
+            print("Turned generator '{0}' {1}".format(gen.name, mode))
         call_alfred_search(KEYWORD_CONF + ' ')
         return 0
 
