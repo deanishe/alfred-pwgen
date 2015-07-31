@@ -9,6 +9,11 @@
 #
 
 """
+Generate English-sounding passwords using Markov chains.
+
+The Markov chain is based on the first few paragraphs of
+*A Tale of Two Cities*.
+
 """
 
 from __future__ import (
@@ -20,12 +25,11 @@ from __future__ import (
 
 from collections import defaultdict
 import itertools
-import math
 import os
 import string
 import random
 
-from generators.base import PassGenBase, ENTROPY_PER_LEVEL
+from generators import WordGenBase
 
 
 # Markov chain code from
@@ -130,13 +134,21 @@ class WordGenerator(object):
             yield ''.join(itertools.islice(chain, length))
 
 
-class PronounceableMarkovGenerator(PassGenBase):
-    """Pronounceable passwords based on Markov chains."""
+class PronounceableMarkovGenerator(WordGenBase):
+    """Pronounceable passwords based on Markov chains.
+
+    The gibberish-based generator (``PronounceableGenerator``) generally
+    provides more pronounceable passwords.
+
+    The words in the passwords are joined with hyphens, but these are
+    not included in the calculation of password strength.
+
+    """
 
     _sample_file = 'english.txt'
 
     def __init__(self):
-        self._sample = None
+        self._data = None
         self._generator = None
 
     @property
@@ -145,15 +157,11 @@ class PronounceableMarkovGenerator(PassGenBase):
 
     @property
     def name(self):
-        return 'Pronounceable Markov'
+        return 'Pronounceable Markov chain'
 
     @property
     def description(self):
-        return 'Pronounceable, English & Markov'
-
-    @property
-    def data(self):
-        return None
+        return 'Pronounceable, Markov-chain-generated English'
 
     @property
     def entropy(self):
@@ -163,27 +171,26 @@ class PronounceableMarkovGenerator(PassGenBase):
         # return self.generator.entropy
 
     @property
-    def sample(self):
-        if not self._sample:
+    def data(self):
+        if not self._data:
             path = os.path.join(os.path.dirname(__file__),
                                 self._sample_file)
             with open(path, 'rb') as fp:
-                self._sample = fp.read().decode('utf-8')
+                self._data = fp.read().decode('utf-8')
 
-        return self._sample
+        return self._data
 
     @property
     def generator(self):
         if not self._generator:
-            self._generator = WordGenerator(self.sample)
+            self._generator = WordGenerator(self.data)
 
         return self._generator
 
     def _password_by_iterations(self, iterations):
         """Return password using ``iterations`` iterations."""
         words = []
-        gen = WordGenerator(self.sample)
-        words = itertools.islice(gen, iterations)
+        words = itertools.islice(self.generator, iterations)
         return '-'.join(words), self.entropy * iterations
 
     def _password_by_length(self, length):
@@ -200,22 +207,6 @@ class PronounceableMarkovGenerator(PassGenBase):
         pw = '-'.join(words)
 
         return pw, self.entropy * len(words)
-
-    def password(self, strength=None, length=None):
-        """Method to generate and return password.
-
-        Either ``strength`` or ``length`` must be specified.
-
-        Returns tuple: (password, entropy)
-
-        """
-
-        if strength is not None:
-            iterations = int(math.ceil(strength / self.entropy))
-            return self._password_by_iterations(iterations)
-
-        else:
-            return self._password_by_length(length)
 
 
 if __name__ == '__main__':

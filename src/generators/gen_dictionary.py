@@ -9,6 +9,8 @@
 #
 
 """
+A password generator based on the contents of ``/usr/share/dict/words``
+
 """
 
 from __future__ import print_function, unicode_literals, absolute_import
@@ -16,10 +18,19 @@ from __future__ import print_function, unicode_literals, absolute_import
 import math
 import random
 
-from generators.base import PassGenBase
+from generators import WordGenBase
 
 
-class WordlistGenerator(PassGenBase):
+class WordlistGenerator(WordGenBase):
+    """Generate passwords based on the ``words`` file included with OS X.
+
+    There's not a huge amount of entropy, so the passwords need to be
+    rather long. But they are easier to remember than most of the others.
+
+    The words in the passwords are joined with hyphens, but these are
+    not included in the calculation of password strength.
+
+    """
 
     _filepath = '/usr/share/dict/words'
     _maxlen = 6  # Ignore words longer than this
@@ -52,40 +63,3 @@ class WordlistGenerator(PassGenBase):
     @property
     def description(self):
         return 'Dictionary words'
-
-    def _password_by_iterations(self, iterations):
-        """Return password using ``iterations`` iterations."""
-        words = []
-        rand = random.SystemRandom()
-        words = [rand.choice(self.data) for i in range(iterations)]
-        return '-'.join(words), self.entropy * iterations
-
-    def _password_by_length(self, length):
-        """Return password of length ``length``."""
-        words = []
-        pw_length = 0
-        rand = random.SystemRandom()
-        while pw_length < length:
-            word = rand.choice(self.data)
-            words.append(word)
-            pw_length += len(word) + 1
-
-        pw = '-'.join(words)
-
-        return pw, self.entropy * len(words)
-
-    def password(self, strength=None, length=None):
-        """Method to generate and return password.
-
-        Either ``strength`` or ``length`` must be specified.
-
-        Returns tuple: (password, entropy)
-
-        """
-
-        if strength is not None:
-            iterations = int(math.ceil(strength / self.entropy))
-            return self._password_by_iterations(iterations)
-
-        else:
-            return self._password_by_length(length)

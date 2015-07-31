@@ -9,14 +9,19 @@
 #
 
 """
-Basic generators.
+Basic password generators.
+
+These generators just return a list of characters from their
+``data`` properties and rely on the ``password()`` method
+of ``PassGenBase`` to generate the passwords.
+
 """
 
 from __future__ import print_function, unicode_literals, absolute_import
 
 import string
 
-from generators.base import PassGenBase, punctuation
+from generators import PassGenBase, punctuation
 
 
 class AsciiGenerator(PassGenBase):

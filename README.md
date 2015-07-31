@@ -11,6 +11,44 @@ Generate secure random passwords from Alfred. Uses `/dev/urandom` as source of e
 - Passwords can be generated based on strength or length.
 - Offers multiple generators, including based on real words and pronounceable pseudo-words generated with Markov chains.
 - Shows the strength of each generated password.
+- More convenient that 1Password or the like.
+- More dependable than online generators.
+
+## Contents ##
+
+- [Installation](#installation)
+- [Usage](#usage)
+- [Password strength](#password-strength)
+  - [Entropy?](#entropy)
+  - [How strong should my passwords be?](#how-strong-should-my-passwords-be)
+    - [Displayed strength](#displayed-strength)
+    - [How can passwords of the same strength have different levels of security?](#how-can-passwords-of-the-same-strength-have-different-levels-of-security)
+- [Configuration](#configuration)
+  - [Open Help](#open-help)
+  - [An Update is Available / No Update is Available](#an-update-is-available--no-update-is-available)
+  - [Default Password Strength](#default-password-strength)
+  - [Default Password Length](#default-password-length)
+  - [Strength Bar](#strength-bar)
+  - [Generators](#generators)
+- [Built-in generators](#built-in-generators)
+  - [Active generators](#active-generators)
+    - [ASCII Generator](#ascii-generator)
+    - [Alphanumeric Generator](#alphanumeric-generator)
+    - [Clear Alphanumeric Generator](#clear-alphanumeric-generator)
+    - [Numeric Generator](#numeric-generator)
+    - [Pronounceable Nonsense Generator](#pronounceable-nonsense-generator)
+    - [Dictionary Generator](#dictionary-generator)
+  - [Inactive generators](#inactive-generators)
+    - [Pronounceable Markov Generator](#pronounceable-markov-generator)
+    - [German Generator](#german-generator)
+    - [German Alphanumeric Generator](#german-alphanumeric-generator)
+    - [German Pronounceable Markov Generator](#german-pronounceable-markov-generator)
+- [Custom generators](#custom-generators)
+  - [ Examples](#examples)
+- [Licensing, thanks](#licensing-thanks)
+- [Changelog](#changelog)
+  - [Version 1.0 (2015-07-28)](#version-10-2015-07-28)
+  - [Version 1.1 (2015-07-28)](#version-11-2015-07-28)
 
 
 ## Installation ##
@@ -42,13 +80,18 @@ Default length is 20 characters, which can provide ~50 to ~130 bits of entropy d
 Each password has its strength in the result subtitle. This is shown either as a bar or in bits of entropy, depending on your settings. Each full block in the bar represents 30 bits of entropy.
 
 
+### Entropy? ###
+
+"Entropy" is [cryptographese for "randomness"][entropy].
+
+
 ### How strong should my passwords be? ###
 
 That depends on what you're using it for and how long you want it to remain secure. As of 2015, custom password-guessing hardware (built from standard PC components) can guess **&gt;45 billion passwords per second.**
 
 The average number of guesses required to crack a password with *n* bits of entropy is 2<sup>n-1</sup>, so 2,147,483,647 guesses for a 32-bit password. Or **0.048 seconds** with the above hardware.
 
-Fortunately, every added bit doubles the amount of entropy passwords, so 64 bits is a good deal stronger: 6.5 **years** on average to guess on the same hardware.
+Fortunately, every added bit doubles the amount of entropy passwords, so 64 bits is a good deal stronger: 6.5 *years* on average to guess on the same hardware.
 
 | Level   | Min. entropy          | Time to guess&nbsp;\*                         | Application                               |
 | ------: | --------------------: | --------------:                               | ---------------------------               |
@@ -101,7 +144,7 @@ If no update is available, "No Update is Available" will be shown. Action this i
 
 ### Default Password Strength ###
 
-The default strength for passwords generated with `pwgen`. For strength *n*, passwords will have *n\*32* bits of entropy. Default is `3`, which should be proof against anything but the NSA. `4` will generate extremely secure passwords.
+The default strength for passwords generated with `pwgen`. For strength *n*, passwords will have *n*\*32 bits of entropy. Default is `3`, which should be proof against anything but the NSA. `4` will generate extremely secure passwords.
 
 Action this item to enter a new default strength.
 
@@ -132,7 +175,11 @@ Action a generator to toggle it on or off.
 
 ## Built-in generators ##
 
+See [below](#custom-generators) for details of how to add your own custom generators.
+
 The workflow includes 10 built-in generators, of which 6 are active by default. You can activate/deactivate them in the [Configuration](#configuration).
+
+**Note**: Word-based password generators return passwords with their component words joined by hyphens. These hyphens are not included in the calculation of the password strength, so removing them will leave you with a password of the stated strength.
 
 
 ### Active generators ###
@@ -141,7 +188,7 @@ These generators are active by default.
 
 #### ASCII Generator ####
 
-Generates passwords based on all ASCII characters, minus a few punctuation marks that can be hard to type, such as `\\`, `\``, `~`.
+Generates passwords based on all ASCII characters, minus a few punctuation marks that can be hard to type, such as \\\`~ (backslash, backtick, tilde).
 
 
 #### Alphanumeric Generator ####
@@ -151,7 +198,7 @@ Generates passwords from ASCII letters and digits. No punctuation.
 
 #### Clear Alphanumeric Generator ####
 
-Generates passwords from ASCII letters and digits, excluding easily-confused characters `1`, `l`, `O`, `0` (lowercase L, uppercase O, the digits 1 and 0).
+Generates passwords from ASCII letters and digits, excluding the easily-confused characters lO01 (lowercase L, uppercase O, the digits 1 and 0).
 
 
 #### Numeric Generator ####
@@ -183,12 +230,12 @@ Has slightly more entropy than the [Pronounceable Nonsense generator](#pronounce
 
 #### German Generator ####
 
-Generate passwords using all ASCII characters (including punctuation), plus German characters (esset, umlauts).
+Generate passwords using the German alphabet, digits and punctuation.
 
 
 #### German Alphanumeric Generator ####
 
-Generate passwords using all ASCII characters (without punctuation), plus German characters (esset, umlauts).
+Generate passwords using the German alphabet and digits without punctuation.
 
 
 #### German Pronounceable Markov Generator ####
@@ -196,9 +243,93 @@ Generate passwords using all ASCII characters (without punctuation), plus German
 Generates semi-pronounceable passwords based on Markov chains and the start of *Buddenbrooks*.
 
 
+## Custom generators ##
+
+You can easily add your own custom password generators. These must be placed in the directory `~/Library/Application Support/Alfred 2/Workflow Data/net.deanishe.alfred-pwgen/generators/`. If you put your custom generators in the workflow itself, they will be deleted when the workflow is updated. You can quickly open up the above directory by entering the Alfred-Workflow magic argument `workflow:opendata` as your query, e.g. `pwconf workflow:opendata`.
+
+**Note**: Your generators will be deactivated by default. You must manually activate them using `pwconf` to use them.
+
+Modules containing your custom generators *must* be named `gen_XXX.py`.
+
+Only files matching the pattern `gen_*.py` will be imported.
+
+Your generator classes *must* subclass `generators.PassGenBase` (or `generators.WordGenBase`), an abstract base class, and *must* have `id_`, `name`, `description` and `data` properties. These have the following purposes:
+
+|    Property   |                                    Purpose                                    |
+|---------------|-------------------------------------------------------------------------------|
+| `id_`         | Short name for your generator, used internally.                               |
+| `name`        | The human-readable name, shown in the configuration.                          |
+| `description` | The longer description shown beneath the generator name in the configuration. |
+| `data`        | Return a sequence of the characters to generate passwords from.               |
+
+The `data` property is used by the `entropy` property and `password()` method on the `PassGenBase` base class.
+
+`PassGenBase` is designed for character-based passwords, i.e. `data` returns a string or other sequence of single characters. `WordGenBase` is for word-based passwords, i.e. `data` returns a sequence of multi-character strings. The main difference is in the implementation of length-based passwords.
+
+**Important:** `data` must return a sequence (`string`, `list` or `tuple`) *not* a generator or `set`. If `random.choice()` chokes on it, it's no good.
+
+
+### Examples ###
+
+A generator to produce German passwords (i.e. possibly including letters like 'ü' or 'ä'):
+
+```python
+
+import string
+from generators import PassGenBase, punctuation
+# punctuation is `string.punctuation` minus a few
+# problematic/hard-to-type symbols (e.g. backslash)
+
+class GermanGenerator(PassGenBase):
+    """Generate passwords containing umlauts."""
+
+    @property
+    def id_(self):
+        return 'deutsch'
+
+    @property
+    def name(self):
+        return 'German'
+
+    @property
+    def description(self):
+        return 'German alphabet, digits and punctuation'
+
+    @property
+    def data(self):
+        return string.ascii_letters + string.digits + punctuation + 'üäöÜÄÖß'
+```
+
+A word-based generator to produce Swedish passwords might look like this:
+
+```python
+from generators import WordGenBase
+
+class BorkGenerator(WordGenBase):
+    """Bork-bork-bork"""
+
+    @property
+    def id_(self):
+        return 'bork'
+
+    @property
+    def name(self):
+        return 'Bork'
+
+    @property
+    def description(self):
+        return 'Borked password generator'
+
+    @property
+    def data(self):
+        return ['bork', 'bork', 'bork']
+```
+
 ## Licensing, thanks ##
 
 This workflow is released under the [MIT Licence](http://opensource.org/licenses/MIT), which is included as the LICENCE file.
+
+The code for the Markov chain comes from [a SimonSapin snippet][markov], and the gibberish-generating code is from a [Greg Haskins StackOverflow answer][gibberish].
 
 It is heavily based on the [Alfred-Workflow](https://github.com/deanishe/alfred-workflow) library, also released under the MIT Licence.
 
@@ -224,7 +355,16 @@ Initial release
 - Add strength bar toggle to configuration
 - Improve filtering in configuration
 
+### Version 1.2 (2015-07-31) ###
+
+- Add separate base class for word-based generators
+- Add custom (user) generator support
+- Refactor built-in generators
+
 
 [demo]: https://github.com/deanishe/alfred-pwgen/raw/master/demo.gif "Alfred Password Generator Demo"
 [gh-releases]: https://github.com/deanishe/alfred-pwgen/releases
 [packal]: http://www.packal.org/workflow/secure-password-generator
+[markov]: https://github.com/SimonSapin/snippets/blob/master/markov_passwords.py
+[gibberish]: http://stackoverflow.com/a/5502875/356942
+[entropy]: https://en.wikipedia.org/wiki/Entropy_(computing)

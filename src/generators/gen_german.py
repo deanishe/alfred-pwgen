@@ -10,12 +10,20 @@
 
 """
 Password genrators based on the German alphabet.
+
+These are variations on the default generators using an alphabet
+extended with German letters.
+
 """
 
 from __future__ import print_function, unicode_literals, absolute_import
 
 from .gen_basic import AsciiGenerator, AlphanumGenerator
 from .gen_pronounceable_markov import PronounceableMarkovGenerator
+
+
+# Umlauts, lovely umlauts
+german_chars = 'ÄäÖöÜüß'
 
 
 class GermanGenerator(AsciiGenerator):
@@ -35,7 +43,6 @@ class GermanGenerator(AsciiGenerator):
 
     @property
     def data(self):
-        german_chars = 'ÄäÖöÜüß'
         return super(GermanGenerator, self).data + german_chars
 
 
@@ -56,7 +63,6 @@ class GermanAlphanumericGenerator(AlphanumGenerator):
 
     @property
     def data(self):
-        german_chars = 'ÄäÖöÜüß'
         return super(GermanAlphanumericGenerator, self).data + german_chars
 
 

@@ -9,7 +9,7 @@
 #
 
 """
-Generate gibberish words.
+Generate password from (mostly) gibberish words.
 
 http://stackoverflow.com/a/5502875/356942
 """
@@ -17,11 +17,9 @@ http://stackoverflow.com/a/5502875/356942
 from __future__ import print_function, unicode_literals, absolute_import
 
 import itertools
-import math
-import random
 import string
 
-from generators.base import PassGenBase
+from generators import WordGenBase
 
 
 initial_consonants = (
@@ -47,7 +45,17 @@ final_consonants = (
 vowels = 'aeiou'
 
 
-class PronounceableGenerator(PassGenBase):
+class PronounceableGenerator(WordGenBase):
+    """Generate passwords based on (mostly) gibberish words.
+
+    Better entropy (so stronger passwords for the same bits) than
+    the dictionary-based generator (``WordlistGenerator``), but
+    a bit harder to remember.
+
+    The words in the passwords are joined with hyphens, but these are
+    not included in the calculation of password strength.
+
+    """
 
     def __init__(self):
         self._syllables = None
@@ -74,41 +82,7 @@ class PronounceableGenerator(PassGenBase):
     def description(self):
         return 'Pronounceable, (mostly) nonsense words'
 
-    def _password_by_iterations(self, iterations):
-        """Return password using ``iterations`` iterations."""
-
-        rand = random.SystemRandom()
-        words = [rand.choice(self.data) for i in range(iterations)]
-        return '-'.join(words), self.entropy * iterations
-
-    def _password_by_length(self, length):
-        """Return password of length ``length``."""
-
-        words = []
-        pw_length = 0
-        rand = random.SystemRandom()
-        while pw_length < length:
-            word = rand.choice(self.data)
-            words.append(word)
-            pw_length += len(word) + 1
-        pw = '-'.join(words)
-        if len(pw) > length:
-            pw = pw[:length]
-            pw.rstrip('-')
-
-        return pw, self.entropy * len(words)
-
-    def password(self, strength=None, length=None):
-        """Generate and return password."""
-
-        if strength is not None:
-            iterations = int(math.ceil(strength / self.entropy))
-            return self._password_by_iterations(iterations)
-
-        else:
-            return self._password_by_length(length)
-
 
 if __name__ == '__main__':
-    gen = PronounceableAltGenerator()
+    gen = PronounceableGenerator()
     print(gen.password(length=30))

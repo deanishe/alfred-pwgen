@@ -32,13 +32,14 @@ Options:
 from __future__ import print_function, unicode_literals, absolute_import
 
 import logging
+import os
 import subprocess
 import sys
 
 from docopt import docopt
 from workflow import Workflow, ICON_WARNING, ICON_HELP, ICON_SETTINGS
 
-from generators import get_generators, ENTROPY_PER_LEVEL
+from generators import get_generators, ENTROPY_PER_LEVEL, import_generators
 
 log = None
 
@@ -177,6 +178,19 @@ class PasswordApp(object):
         elif args.get('set'):
             return self.do_set()
 
+    def load_user_generators(self):
+        """Ensure any user generators are loaded"""
+
+        user_generator_dir = wf.datafile('generators')
+
+        # Create user generator directory
+        if not os.path.exists(user_generator_dir):
+            os.makedirs(user_generator_dir, 0700)
+        else:  # Import user generators
+            # log.debug('Importing user generators from `%s` ...',
+            #           user_generator_dir)
+            import_generators(user_generator_dir)
+
     def do_generate(self):
         """Generate and display passwords from active generators."""
         wf = self.wf
@@ -233,6 +247,7 @@ class PasswordApp(object):
 
             log.info('Password strength: %d bits', pw_strength)
 
+        self.load_user_generators()
         generators = get_generators()
 
         # Filter out inactive generators
@@ -354,7 +369,7 @@ class PasswordApp(object):
         )
 
         # Generators
-
+        self.load_user_generators()
         generators = get_generators()
         active_generators = wf.settings.get('generators', [])
 
