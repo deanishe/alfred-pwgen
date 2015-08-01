@@ -246,6 +246,10 @@ def get_generators():
         import_generators(builtin_dir)
 
     for klass in get_subclasses(PassGenBase):
+        # Ignore base classes
+        if klass.__name__ == 'WordGenBase':
+            continue
+
         try:
             inst = klass()
             log.debug('Loaded generator : `%s`', inst.name)

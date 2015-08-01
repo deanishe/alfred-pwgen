@@ -1,9 +1,12 @@
-Features to add:
+Improvements:
+
+New features:
 	- Allow default strength to be a bit value, e.g. `64b`
 
-Optional features:
+Bugs:
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+	- Can't disable user-defined generators. @done(15-08-01 00:39) @project(Bugs)
 	- Make word-based passwords work better with specific lengths. @done(15-07-28 13:19) @project(Features to add)
 	- Implement configuration @done(15-07-28 11:34) @project(Features to add)

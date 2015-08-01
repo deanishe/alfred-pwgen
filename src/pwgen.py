@@ -268,19 +268,16 @@ class PasswordApp(object):
             # log.debug('[%s] %s', g.id_, g.password())
             if mode == 'length':
                 pw, entropy = g.password(length=pw_length)
-                # subtitle = 'Strength : %0.2f  // %s' % (entropy, g.description)
             else:
                 pw, entropy = g.password(strength=pw_strength)
 
             if wf.settings.get('strength_bar'):
                 strength = pw_strength_meter(entropy)
             else:
-                strength = 'Strength : %0.1f bits' % entropy
+                strength = 'Strength : %0.1f bits //' % entropy
 
-            subtitle = ('%s // Length : %d  // %s' %
+            subtitle = ('%s Length : %d  // %s' %
                         (strength, len(pw), g.description))
-            # subtitle = ('Strength : %0.2f // Length : %d  // %s' %
-            #             (entropy, len(pw), g.description))
 
             wf.add_item(pw,
                         subtitle,
@@ -450,6 +447,9 @@ class PasswordApp(object):
             print('Turned strength bar {0}'.format(mode))
 
         else:  # Generator toggles
+
+            self.load_user_generators()
+
             gen = None
             for g in get_generators():
                 if g.id_ == gen_id:
