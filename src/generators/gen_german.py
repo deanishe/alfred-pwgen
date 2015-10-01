@@ -30,7 +30,7 @@ class GermanGenerator(AsciiGenerator):
     """ASCII + German characters."""
 
     @property
-    def id_(self):
+    def id(self):
         return 'german'
 
     @property
@@ -50,7 +50,7 @@ class GermanAlphanumericGenerator(AlphanumGenerator):
     """German alphabet and digits."""
 
     @property
-    def id_(self):
+    def id(self):
         return 'german-alphanumeric'
 
     @property
@@ -72,7 +72,7 @@ class GermanPronounceableGenerator(PronounceableMarkovGenerator):
     _sample_file = 'german.txt'
 
     @property
-    def id_(self):
+    def id(self):
         return 'pronounceable-german'
 
     @property

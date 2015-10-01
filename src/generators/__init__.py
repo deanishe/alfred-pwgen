@@ -17,8 +17,8 @@ the base class for generators.
 The default generators are contained in (and loaded from) the
 other modules in this package matching the pattern ``gen_*.py``.
 
-All generators must subclass ``PassGenBase`` in order to
-be recognised by the workflow.
+All generators must subclass ``PassGenBase`` or ``WordGenBase``
+in order to be recognised by the workflow.
 
 """
 
@@ -37,12 +37,13 @@ import random
 import sys
 
 __all__ = [
-    'get_subclasses',
-    'get_generators',
-    'import_generators',
     'ENTROPY_PER_LEVEL',
+    'get_generators',
+    'get_subclasses',
+    'import_generators',
     'PassGenBase',
     'punctuation',
+    'WordGenBase',
 ]
 
 imported_dirs = set()
@@ -57,22 +58,24 @@ punctuation = """!"#$%&'()*+,-./:;<=>?@[]^_{|}"""
 
 
 class PassGenBase(object):
-    """Base class for generators
+    """Base class for generators.
 
-    Generators *must* subclass this abstract base class.
+    Generators *must* subclass this abstract base class (or
+    ``WordGenBase``, which is a subclass of this class).
 
     If you just use ``PassGenBase.register()``, the workflow
     will not find the generator.
 
-    Subclasses must override the ``id_``, ``name``, ``description``
+    Subclasses must override the ``id``, ``name``, ``description``
     and ``data`` properties to be valid generators.
 
-    A very simple generator can just return an interable of
+    A very simple generator can just return a sequence of
     characters from ``data``. The ``password`` method of this
     base class will then generate a random password of the
     required length/strength from the interable's contents.
 
     """
+
     __metaclass__ = abc.ABCMeta
 
     def password(self, strength=None, length=None):
@@ -96,7 +99,7 @@ class PassGenBase(object):
         return math.log(len(self.data), 2)
 
     @abc.abstractproperty
-    def id_(self):
+    def id(self):
         """Short name of the generator.
 
         Used in settings to identify the generator.
@@ -136,7 +139,12 @@ def _get_generator_modules(dirpath):
 
 
 class WordGenBase(PassGenBase):
-    """"""
+    """Base class for word-based generators.
+
+    Usage is the same as ``PassGenBase`` except ``data`` should
+    be a sequence of words, not characters.
+
+    """
 
     def _password_by_iterations(self, iterations):
         """Return password using ``iterations`` iterations."""

@@ -87,6 +87,8 @@ end tell
 
 
 def call_alfred_search(query):
+    """Call Alfred with ``query``."""
+
     command = 'search "{0}"'.format(query)
     cmd = [b'/usr/bin/osascript', b'-e',
            ALFRED_AS.format(command).encode('utf-8')]
@@ -94,6 +96,8 @@ def call_alfred_search(query):
 
 
 def call_external_trigger(name, arg):
+    """Call External Trigger ``name`` with ``arg``."""
+
     command = 'run trigger "{0}" in workflow "{1}" with argument "{2}"'.format(
         name, wf.bundleid, arg)
     cmd = [b'/usr/bin/osascript', b'-e',
@@ -103,6 +107,7 @@ def call_external_trigger(name, arg):
 
 def pw_strength_meter(entropy):
     """Return 'graphical' bar of password strength."""
+
     bar = ''
     bars, rem = divmod(entropy / ENTROPY_PER_LEVEL, 1)
     bar = BLOCK_FULL * int(bars)
@@ -138,7 +143,7 @@ def entropy_from_strength(strength):
 
 
 class PasswordApp(object):
-    """Workflow application"""
+    """Workflow application."""
 
     def __init__(self, wf):
         self.wf = wf
@@ -177,7 +182,7 @@ class PasswordApp(object):
             return self.do_set()
 
     def load_user_generators(self):
-        """Ensure any user generators are loaded"""
+        """Ensure any user generators are loaded."""
 
         user_generator_dir = wf.datafile('generators')
 
@@ -185,8 +190,6 @@ class PasswordApp(object):
         if not os.path.exists(user_generator_dir):
             os.makedirs(user_generator_dir, 0700)
         else:  # Import user generators
-            # log.debug('Importing user generators from `%s` ...',
-            #           user_generator_dir)
             import_generators(user_generator_dir)
 
     def do_generate(self):
@@ -214,7 +217,7 @@ class PasswordApp(object):
             if pw_length:
                 if not pw_length.isdigit():
                     wf.add_item('`{0}` is not a number'.format(pw_length),
-                                'Usage: pwgen [length]',
+                                'Usage: pwlen [length]',
                                 icon=ICON_WARNING)
                     wf.send_feedback()
                     return 0
@@ -233,7 +236,7 @@ class PasswordApp(object):
                 pw_strength = entropy_from_strength(pw_strength)
             except ValueError:
                 wf.add_item('`{0}` is not a number'.format(pw_strength),
-                            'Usage: pwgen [length]',
+                            'Usage: pwgen [strength]',
                             icon=ICON_WARNING)
                 wf.send_feedback()
                 return 0
@@ -251,7 +254,7 @@ class PasswordApp(object):
         # Filter out inactive generators
         active_generators = wf.settings.get('generators', [])
         if len(active_generators):
-            generators = [g for g in generators if g.id_ in active_generators]
+            generators = [g for g in generators if g.id in active_generators]
 
         log.debug('%d active generators', len(generators))
 
@@ -262,8 +265,8 @@ class PasswordApp(object):
 
         for g in generators:
             log.debug('[%0.2f/%s] %s : %s',
-                      g.entropy, g.id_, g.name, g.description)
-            # log.debug('[%s] %s', g.id_, g.password())
+                      g.entropy, g.id, g.name, g.description)
+            # log.debug('[%s] %s', g.id, g.password())
             if mode == 'length':
                 pw, entropy = g.password(length=pw_length)
             else:
@@ -279,7 +282,7 @@ class PasswordApp(object):
 
             wf.add_item(pw,
                         subtitle,
-                        arg=pw, uid=g.id_,
+                        arg=pw, uid=g.id,
                         autocomplete=query,
                         valid=True,
                         copytext=pw,
@@ -289,21 +292,12 @@ class PasswordApp(object):
         return 0
 
     def do_conf(self):
-        """Show configuration options"""
+        """Show configuration options."""
+
         args = self.args
         wf = self.wf
         query = args.get('<query>')
         options = []
-
-        # Help file
-        options.append(
-            {
-                'title': 'Open Help',
-                'subtitle': 'View online help in your browser',
-                'autocomplete': 'workflow:help',
-                'icon': ICON_HELP,
-            }
-        )
 
         # Update status
         if wf.update_available:
@@ -324,6 +318,16 @@ class PasswordApp(object):
                     'icon': 'icons/update-none.icns',
                 }
             )
+
+        # Help file
+        options.append(
+            {
+                'title': 'Open Help',
+                'subtitle': 'View online help in your browser',
+                'autocomplete': 'workflow:help',
+                'icon': ICON_HELP,
+            }
+        )
 
         # Settings
         options.append(
@@ -369,7 +373,7 @@ class PasswordApp(object):
         active_generators = wf.settings.get('generators', [])
 
         for gen in generators:
-            if gen.id_ in active_generators:
+            if gen.id in active_generators:
                 icon = 'icons/toggle_on.icns'
             else:
                 icon = 'icons/toggle_off.icns'
@@ -377,7 +381,7 @@ class PasswordApp(object):
                 {
                     'title': 'Generator : {0}'.format(gen.name),
                     'subtitle': gen.description,
-                    'arg': 'toggle {0}'.format(gen.id_),
+                    'arg': 'toggle {0}'.format(gen.id),
                     'valid': True,
                     'icon': icon,
                 }
@@ -399,7 +403,8 @@ class PasswordApp(object):
         return 0
 
     def do_set(self):
-        """Set password strength/length"""
+        """Set password strength/length."""
+
         wf = self.wf
         args = self.args
         key = args.get('<key>')
@@ -427,7 +432,8 @@ class PasswordApp(object):
         return 0
 
     def do_toggle(self):
-        """Toggle generators on/off"""
+        """Toggle generators on/off."""
+
         wf = self.wf
         args = self.args
         gen_id = args.get('<genid>')
@@ -450,7 +456,7 @@ class PasswordApp(object):
 
             gen = None
             for g in get_generators():
-                if g.id_ == gen_id:
+                if g.id == gen_id:
                     gen = g
                     break
             if not gen:
@@ -475,6 +481,8 @@ class PasswordApp(object):
 
 
 def main(wf):
+    """Run workflow."""
+
     app = PasswordApp(wf)
     return app.run()
 

@@ -15,8 +15,6 @@ A password generator based on the contents of ``/usr/share/dict/words``
 
 from __future__ import print_function, unicode_literals, absolute_import
 
-import math
-import random
 
 from generators import WordGenBase
 
@@ -53,7 +51,7 @@ class WordlistGenerator(WordGenBase):
         return self._words
 
     @property
-    def id_(self):
+    def id(self):
         return 'dictionary'
 
     @property

@@ -71,7 +71,7 @@ class PronounceableGenerator(WordGenBase):
         return self._syllables
 
     @property
-    def id_(self):
+    def id(self):
         return 'pronounceable'
 
     @property

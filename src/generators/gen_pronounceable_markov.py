@@ -152,7 +152,7 @@ class PronounceableMarkovGenerator(WordGenBase):
         self._generator = None
 
     @property
-    def id_(self):
+    def id(self):
         return 'pronounceable-markov'
 
     @property

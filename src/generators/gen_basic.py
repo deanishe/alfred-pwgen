@@ -28,7 +28,7 @@ class AsciiGenerator(PassGenBase):
     """Simple ASCII password generator."""
 
     @property
-    def id_(self):
+    def id(self):
         return 'ascii'
 
     @property
@@ -48,7 +48,7 @@ class AlphanumGenerator(PassGenBase):
     """Simple alphanumeric password generator."""
 
     @property
-    def id_(self):
+    def id(self):
         return 'alphanumeric'
 
     @property
@@ -68,7 +68,7 @@ class AlphanumClearGenerator(PassGenBase):
     """Simple alphanumeric password generator w/out confusable characters."""
 
     @property
-    def id_(self):
+    def id(self):
         return 'alphanumeric-clear'
 
     @property
@@ -90,7 +90,7 @@ class NumericGenerator(PassGenBase):
     """Simple numeric password generator."""
 
     @property
-    def id_(self):
+    def id(self):
         return 'numeric'
 
     @property
