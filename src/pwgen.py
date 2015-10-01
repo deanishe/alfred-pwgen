@@ -94,10 +94,8 @@ def call_alfred_search(query):
 
 
 def call_external_trigger(name, arg):
-    command = (
-        'tell application "Alfred 2" to run trigger "{0}"'
-        'in workflow "{1}" with argument "{2}"'
-    ).format(name, wf.bundleid, arg)
+    command = 'run trigger "{0}" in workflow "{1}" with argument "{2}"'.format(
+        name, wf.bundleid, arg)
     cmd = [b'/usr/bin/osascript', b'-e',
            ALFRED_AS.format(command).encode('utf-8')]
     subprocess.call(cmd)
