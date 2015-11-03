@@ -364,6 +364,10 @@ Initial release
 - Add custom (user) generator support
 - Refactor built-in generators
 
+### Version 1.3 (2015-11-03) ###
+
+- Change `id_` property of generators to `id`
+
 
 [demo]: https://github.com/deanishe/alfred-pwgen/raw/master/demo.gif "Alfred Password Generator Demo"
 [gh-releases]: https://github.com/deanishe/alfred-pwgen/releases
