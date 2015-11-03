@@ -77,7 +77,7 @@ Passwords can be specified either by strength or length. The default strength is
 
 Default length is 20 characters, which can provide ~50 to ~130 bits of entropy depending on generator.
 
-Each password has its strength in the result subtitle. This is shown either as a bar or in bits of entropy, depending on your settings. Each full block in the bar represents 30 bits of entropy.
+Each password has its strength in the result subtitle. This is shown either as a bar or in bits of entropy, depending on your settings. Each full block in the bar represents 32 bits of entropy.
 
 
 ### Entropy? ###

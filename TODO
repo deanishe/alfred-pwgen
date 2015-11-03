@@ -1,7 +1,10 @@
 Improvements:
+	- Remove '//' separator when blocks are used
+	- Use coloured icons to indicate passwords strength
 
 New features:
 	- Allow default strength to be a bit value, e.g. `64b`
+	- Allow "required" elements, e.g. at least one non-ASCII character, at least one digit etc.
 
 Bugs:
 
