@@ -91,7 +91,7 @@ That depends on what you're using it for and how long you want it to remain secu
 
 The *average* number of guesses required to crack a password with *n* bits of entropy is 2<sup>n-1</sup>, so 2,147,483,647 guesses for a 32-bit password. Or **0.048 seconds** with the above hardware.
 
-Fortunately, every added bit doubles the amount of entropy passwords, so 64 bits is a good deal stronger: 6.5 *years* on average to guess on the same hardware.
+Fortunately, every added bit doubles the amount of entropy, so 64 bits is a good deal stronger: 6.5 *years* on average to guess on the same hardware.
 
 | Level   | Min. entropy          | Time to guess&nbsp;\*                         | Application                               |
 | ------: | --------------------: | --------------:                               | ---------------------------               |
