@@ -82,7 +82,7 @@ class AlphanumClearGenerator(PassGenBase):
     @property
     def data(self):
         data = (set(string.ascii_letters) | set(string.digits))
-        data = data - set('l10O')
+        data = data - set('iIl10O')
         return ''.join(data)
 
 
