@@ -231,6 +231,11 @@ Generates semi-pronounceable passwords based on Markov chains and the start of *
 Has slightly more entropy than the [Pronounceable Nonsense generator](#pronounceable-nonsense-generator), but the passwords aren't quite as pronounceable.
 
 
+#### Hexadecimal Generator ####
+
+Generate passwords using hexadecimal characters (0-9, a-f).
+
+
 #### German Generator ####
 
 Generate passwords using the German alphabet, digits and punctuation.
