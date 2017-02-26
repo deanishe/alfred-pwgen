@@ -443,3 +443,4 @@ class Workflow3(Workflow):
         """Print stored items to console/Alfred as JSON."""
         json.dump(self.obj, sys.stdout)
         sys.stdout.flush()
+        sys.exit()
