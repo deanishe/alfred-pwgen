@@ -389,7 +389,7 @@ Initial release
 - Icons reflect password strength
 - Alfred 3 only
 - Option to turn notifications off #3
-- Fix syntax error #11
+- Fix syntax error #5
 
 
 [demo]: https://github.com/deanishe/alfred-pwgen/raw/master/demo.gif "Alfred Password Generator Demo"
