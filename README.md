@@ -49,6 +49,9 @@ Generate secure random passwords from Alfred. Uses `/dev/urandom` as source of e
 - [Changelog](#changelog)
   - [Version 1.0 (2015-07-28)](#version-10-2015-07-28)
   - [Version 1.1 (2015-07-28)](#version-11-2015-07-28)
+  - [Version 1.2 (2015-07-31)](#version-12-2015-07-31)
+  - [Version 1.3 (2015-11-03)](#version-13-2015-11-03)
+  - [Version 2.0 (2017-02-26)](#version-20-2017-02-26)
 
 
 ## Installation ##
@@ -77,7 +80,13 @@ Passwords can be specified either by strength or length. The default strength is
 
 Default length is 20 characters, which can provide ~50 to ~130 bits of entropy depending on generator.
 
-Each password has its strength in the result subtitle. This is shown either as a bar or in bits of entropy, depending on your settings. Each full block in the bar represents 32 bits of entropy.
+Each password has its strength in the result subtitle. This is shown either as a bar or in bits of entropy, depending on your settings. Each full block in the bar represents 32 bits of entropy. The icon shown next to each password also reflects its strength:
+
+| Icon                            | Strength (bits of entropy) |
+| ------------------------------- | -------------------------- |
+| ![](./strong.png "strong.png")  | Strength >= 96b            |
+| ![](./okay.png "okay.png")      | Strength > 64b and < 96b   |
+| ![](./weak.png "weak.png")      | Strength <= 64b            |
 
 
 ### Entropy? ###
@@ -128,7 +137,7 @@ See [Password strength on Wikipedia](https://en.wikipedia.org/wiki/Password_stre
 
 ## Configuration ##
 
-Access the configuraton options with the `pwconf` keyword. You can use an optional query to filter the available options, e.g. use `pwconf gen` to show only the available generators.
+Access the configuration options with the `pwconf` keyword. You can use an optional query to filter the available options, e.g. use `pwconf gen` to show only the available generators.
 
 The following configuraton options are available:
 
@@ -342,7 +351,7 @@ The code for the Markov chain comes from [a SimonSapin snippet][markov], and the
 
 It is heavily based on the [Alfred-Workflow](https://github.com/deanishe/alfred-workflow) library, also released under the MIT Licence.
 
-The workflow icon is from the [IcoMoon](https://icomoon.io/) webfont \([licence](https://icomoon.io/#termsofuse)\).
+The workflow icon is from the [Elusive Icons](https://github.com/aristath/elusive-iconfont) webfont \([licence](http://scripts.sil.org/OFL)\).
 
 The other icons are based on the [Font Awesome](http://fortawesome.github.io/Font-Awesome/) webfont \([licence](http://scripts.sil.org/OFL)\).
 
@@ -373,6 +382,14 @@ Initial release
 ### Version 1.3 (2015-11-03) ###
 
 - Change `id_` property of generators to `id`
+
+
+### Version 2.0 (2017-02-26) ###
+
+- Icons reflect password strength
+- Alfred 3 only
+- Option to turn notifications off #3
+- Fix syntax error #11
 
 
 [demo]: https://github.com/deanishe/alfred-pwgen/raw/master/demo.gif "Alfred Password Generator Demo"

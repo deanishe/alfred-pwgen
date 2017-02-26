@@ -16,6 +16,7 @@ Usage:
     pwgen.py generate [-v|-q|-d] [<strength>]
     pwgen.py generate [-v|-q|-d] --length [<length>]
     pwgen.py conf [-v|-q|-d] [<query>]
+    pwgen.py notify [-v|-q|-d] <message>
     pwgen.py set [-v|-q|-d] <key> [<value>]
     pwgen.py toggle [-v|-q|-d] <genid>
     pwgen.py (-h|--version)
@@ -37,7 +38,7 @@ import subprocess
 import sys
 
 from docopt import docopt
-from workflow import Workflow, ICON_WARNING, ICON_HELP, ICON_SETTINGS
+from workflow import Workflow3, ICON_WARNING, ICON_HELP, ICON_SETTINGS
 
 from generators import get_generators, ENTROPY_PER_LEVEL, import_generators
 
@@ -45,6 +46,15 @@ log = None
 
 DEFAULT_PW_LENGTH = 20
 DEFAULT_PW_STRENGTH = 3
+
+# Less entropy means a weak password
+STRENGTH_WEAK = 64
+# More entropy means a strong password
+STRENGTH_STRONG = 96
+
+ICON_STRONG = 'icons/strong.icns'
+ICON_WEAK = 'icons/weak.icns'
+ICON_OKAY = 'icons/okay.icns'
 
 # Alfred keywords
 KEYWORD_GEN = 'pwgen'
@@ -80,7 +90,7 @@ HELP_URL = 'https://github.com/deanishe/alfred-pwgen#alfred-password-generator'
 
 # AppleScript to call Alfred
 ALFRED_AS = """\
-tell application "Alfred 2"
+tell application "Alfred 3"
     {0}
 end tell
 """
@@ -88,18 +98,18 @@ end tell
 
 def call_alfred_search(query):
     """Call Alfred with ``query``."""
-
     command = 'search "{0}"'.format(query)
     cmd = [b'/usr/bin/osascript', b'-e',
            ALFRED_AS.format(command).encode('utf-8')]
     subprocess.call(cmd)
 
 
-def call_external_trigger(name, arg):
-    """Call External Trigger ``name`` with ``arg``."""
+def call_external_trigger(name, arg=None):
+    """Call External Trigger ``name`` with optional ``arg``."""
+    command = 'run trigger "{0}" in workflow "{1}"'.format(name, wf.bundleid)
+    if arg is not None:
+        command += ' with argument "{0}"'.format(arg)
 
-    command = 'run trigger "{0}" in workflow "{1}" with argument "{2}"'.format(
-        name, wf.bundleid, arg)
     cmd = [b'/usr/bin/osascript', b'-e',
            ALFRED_AS.format(command).encode('utf-8')]
     subprocess.call(cmd)
@@ -107,7 +117,6 @@ def call_external_trigger(name, arg):
 
 def pw_strength_meter(entropy):
     """Return 'graphical' bar of password strength."""
-
     bar = ''
     bars, rem = divmod(entropy / ENTROPY_PER_LEVEL, 1)
     bar = BLOCK_FULL * int(bars)
@@ -122,6 +131,15 @@ def pw_strength_meter(entropy):
     return bar
 
 
+def pw_strength_icon(entropy):
+    """Return path to appropriate icon for entropy."""
+    if entropy <= STRENGTH_WEAK:
+        return ICON_WEAK
+    if entropy >= STRENGTH_STRONG:
+        return ICON_STRONG
+    return ICON_OKAY
+
+
 def entropy_from_strength(strength):
     """Return bits of entropy for ``strength``.
 
@@ -129,7 +147,6 @@ def entropy_from_strength(strength):
     treat as level and multiply by ``ENTROPY_PER_LEVEL``.
 
     """
-
     if not isinstance(strength, basestring):
         strength = str(strength)
     strength = strength.strip()
@@ -156,7 +173,6 @@ class PasswordApp(object):
         Parse command-line arguments and call appropriate `do_XXX` method.
 
         """
-
         args = self.args = docopt(__doc__,
                                   argv=self.wf.args,
                                   version=self.wf.version)
@@ -176,6 +192,8 @@ class PasswordApp(object):
             return self.do_generate()
         elif args.get('conf'):
             return self.do_conf()
+        elif args.get('notify'):
+            return self.do_notify()
         elif args.get('toggle'):
             return self.do_toggle()
         elif args.get('set'):
@@ -183,7 +201,6 @@ class PasswordApp(object):
 
     def load_user_generators(self):
         """Ensure any user generators are loaded."""
-
         user_generator_dir = wf.datafile('generators')
 
         # Create user generator directory
@@ -191,6 +208,22 @@ class PasswordApp(object):
             os.makedirs(user_generator_dir, 0700)
         else:  # Import user generators
             import_generators(user_generator_dir)
+
+    def do_notify(self):
+        """Show a notification."""
+        wf = self.wf
+        args = self.args
+        msg = args.get('<message>')
+        if wf.settings.get('suppress_notifications'):
+            log.debug('Notifications turned off')
+            return
+
+        if msg.strip() == '':
+            log.debug('Empty notification')
+            return
+
+        from workflow.notify import notify
+        notify('Password Generator', msg)
 
     def do_generate(self):
         """Generate and display passwords from active generators."""
@@ -280,20 +313,29 @@ class PasswordApp(object):
             subtitle = ('%s Length : %d  // %s' %
                         (strength, len(pw), g.description))
 
-            wf.add_item(pw,
-                        subtitle,
-                        arg=pw, uid=g.id,
-                        autocomplete=query,
-                        valid=True,
-                        copytext=pw,
-                        largetext=pw)
+            icon = pw_strength_icon(entropy)
+
+            it = wf.add_item(pw,
+                             subtitle,
+                             arg=pw, uid=g.id,
+                             autocomplete=query,
+                             valid=True,
+                             copytext=pw,
+                             largetext=pw,
+                             icon=icon)
+
+            it.setvar('notification', 'Password copied to clipboard')
+            it.setvar('action', 'copy')
+
+            m = it.add_modifier('cmd',
+                'Copy to clipboard and paste to frontmost application')
+            m.setvar('action', 'paste')
 
         wf.send_feedback()
         return 0
 
     def do_conf(self):
         """Show configuration options."""
-
         args = self.args
         wf = self.wf
         query = args.get('<query>')
@@ -352,6 +394,21 @@ class PasswordApp(object):
             }
         )
 
+        # Show notifications
+        if wf.settings.get('suppress_notifications'):
+            icon = 'icons/toggle_off.icns'
+        else:
+            icon = 'icons/toggle_on.icns'
+        options.append(
+            {
+                'title': 'Show notifications',
+                'subtitle': 'Show a notification when a password is copied',
+                'arg': 'toggle notifications',
+                'valid': True,
+                'icon': icon,
+            }
+        )
+
         # Strength bar
         if wf.settings.get('strength_bar'):
             icon = 'icons/toggle_on.icns'
@@ -404,7 +461,6 @@ class PasswordApp(object):
 
     def do_set(self):
         """Set password strength/length."""
-
         wf = self.wf
         args = self.args
         key = args.get('<key>')
@@ -428,12 +484,11 @@ class PasswordApp(object):
             wf.settings['pw_length'] = value
             print('Set default password length to {0}'.format(value))
 
-        call_alfred_search(KEYWORD_CONF + ' ')
+        # call_alfred_search(KEYWORD_CONF + ' ')
         return 0
 
     def do_toggle(self):
         """Toggle generators on/off."""
-
         wf = self.wf
         args = self.args
         gen_id = args.get('<genid>')
@@ -450,6 +505,17 @@ class PasswordApp(object):
                 mode = 'on'
             print('Turned strength bar {0}'.format(mode))
 
+        # Notifications toggle
+        elif gen_id == 'notifications':
+            if wf.settings.get('suppress_notifications'):
+                log.debug('Turning notifications on...')
+                del wf.settings['suppress_notifications']
+                mode = 'on'
+            else:
+                log.debug('Turning notifications off...')
+                wf.settings['suppress_notifications'] = True
+                mode = 'off'
+
         else:  # Generator toggles
 
             self.load_user_generators()
@@ -463,7 +529,7 @@ class PasswordApp(object):
                 log.critical('Unknown generator : %s', gen_id)
                 return 1
 
-            active_generators = wf.settings.get('generators', [])
+            active_generators = wf.settings.get('generators', [])[:]
             if gen_id in active_generators:
                 log.debug('Turning generator `%s` off...', gen.name)
                 active_generators.remove(gen_id)
@@ -476,19 +542,19 @@ class PasswordApp(object):
             wf.settings['generators'] = active_generators
 
             print("Turned generator '{0}' {1}".format(gen.name, mode))
-        call_alfred_search(KEYWORD_CONF + ' ')
+        # call_alfred_search(KEYWORD_CONF + ' ')
+        call_external_trigger('conf')
         return 0
 
 
 def main(wf):
     """Run workflow."""
-
     app = PasswordApp(wf)
     return app.run()
 
 
 if __name__ == '__main__':
-    wf = Workflow(
+    wf = Workflow3(
         default_settings=DEFAULT_SETTINGS,
         update_settings=UPDATE_SETTINGS,
         help_url=HELP_URL)

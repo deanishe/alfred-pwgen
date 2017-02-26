@@ -86,7 +86,6 @@ class PassGenBase(object):
         Returns tuple: (password, entropy)
 
         """
-
         if strength is not None:
             length = int(math.ceil(strength / self.entropy))
 
@@ -96,6 +95,7 @@ class PassGenBase(object):
 
     @property
     def entropy(self):
+        """Entropy per element (character word) in bits."""
         return math.log(len(self.data), 2)
 
     @abc.abstractproperty
@@ -105,7 +105,6 @@ class PassGenBase(object):
         Used in settings to identify the generator.
 
         """
-
         return
 
     @abc.abstractproperty
@@ -126,7 +125,6 @@ class PassGenBase(object):
 
 def _get_generator_modules(dirpath):
     """Return list of files in dirpath matching ``gen_*.py``"""
-
     modnames = []
 
     for filename in os.listdir(dirpath):
@@ -175,7 +173,6 @@ class WordGenBase(PassGenBase):
         Returns tuple: (password, entropy)
 
         """
-
         if strength is not None:
             iterations = int(math.ceil(strength / self.entropy))
             return self._password_by_iterations(iterations)
@@ -192,7 +189,6 @@ def import_generators(dirpath):
     As a result, user modules may override built-ins.
 
     """
-
     dirpath = os.path.abspath(dirpath)
 
     if dirpath in imported_dirs:
@@ -227,7 +223,6 @@ def get_subclasses(klass):
     Also recurses into subclasses.
 
     """
-
     subclasses = []
 
     for cls in klass.__subclasses__():
@@ -245,7 +240,6 @@ def get_generators():
     to enforce interface compliance :(
 
     """
-
     generators = []
     builtin_dir = os.path.abspath(os.path.dirname(__file__))
 

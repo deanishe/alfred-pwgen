@@ -6,7 +6,7 @@
 	<string>net.deanishe.alfred-pwgen</string>
 	<key>connections</key>
 	<dict>
-		<key>11DCEFA6-93E8-4C7A-ACB2-0AE37EE16C7A</key>
+		<key>01164317-C90B-46F2-BF74-4A229934CD6A</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
@@ -15,30 +15,21 @@
 				<integer>0</integer>
 				<key>modifiersubtext</key>
 				<string></string>
+				<key>vitoclose</key>
+				<false/>
 			</dict>
+		</array>
+		<key>11DCEFA6-93E8-4C7A-ACB2-0AE37EE16C7A</key>
+		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>00F8B021-1903-4C35-8A0C-7D647485DE76</string>
-				<key>modifiers</key>
-				<integer>1048576</integer>
-				<key>modifiersubtext</key>
-				<string>Copy to clipboard and paste to frontmost application</string>
-			</dict>
-			<dict>
-				<key>destinationuid</key>
-				<string>677BDBCD-A330-4460-8C0C-9261842ED8DA</string>
+				<string>C269101C-6A18-4CA8-BE12-60890AF5D901</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
 				<string></string>
-			</dict>
-			<dict>
-				<key>destinationuid</key>
-				<string>95DA10FB-2310-40DB-B8DB-04C7879F1C3F</string>
-				<key>modifiers</key>
-				<integer>1048576</integer>
-				<key>modifiersubtext</key>
-				<string></string>
+				<key>vitoclose</key>
+				<false/>
 			</dict>
 		</array>
 		<key>11F99880-019E-45DF-98D4-B539E3799209</key>
@@ -50,6 +41,21 @@
 				<integer>0</integer>
 				<key>modifiersubtext</key>
 				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>5568F053-9880-44ED-A921-29476B7B1353</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>00F8B021-1903-4C35-8A0C-7D647485DE76</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
 			</dict>
 		</array>
 		<key>76F9A947-6B5B-412D-AAAE-E0518115DE1D</key>
@@ -61,17 +67,31 @@
 				<integer>0</integer>
 				<key>modifiersubtext</key>
 				<string></string>
+				<key>vitoclose</key>
+				<true/>
 			</dict>
 		</array>
 		<key>7D8BF49A-E602-40BF-BDC5-F25C7D12E9CB</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>AA158B68-87F0-45A5-B7B2-7A3C5C5AC25E</string>
+				<string>30266CFD-6382-4FA7-8838-6141EC90CBA6</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
 				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>7E3513D5-CBDB-44E4-B033-580134955C86</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
 			</dict>
 		</array>
 		<key>86437401-8D94-40C2-9015-CD654C6CB51C</key>
@@ -83,17 +103,67 @@
 				<integer>0</integer>
 				<key>modifiersubtext</key>
 				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>86710CD5-FF9A-48A1-9128-DC382924805E</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>76F9A947-6B5B-412D-AAAE-E0518115DE1D</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
 			</dict>
 		</array>
 		<key>98EFEE54-A77F-43F1-832C-0EA448AEDE68</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>AA158B68-87F0-45A5-B7B2-7A3C5C5AC25E</string>
+				<string>30266CFD-6382-4FA7-8838-6141EC90CBA6</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
 				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>C269101C-6A18-4CA8-BE12-60890AF5D901</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>01164317-C90B-46F2-BF74-4A229934CD6A</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>5568F053-9880-44ED-A921-29476B7B1353</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>32AC182F-19A8-46E4-9706-55AFD22A314D</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
 			</dict>
 		</array>
 		<key>CB7811B1-3B34-463E-9039-C5ABDB488185</key>
@@ -105,52 +175,44 @@
 				<integer>0</integer>
 				<key>modifiersubtext</key>
 				<string></string>
+				<key>vitoclose</key>
+				<false/>
 			</dict>
 		</array>
 		<key>DBA8E550-5B42-4A57-AED0-8D70D4AC2327</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>02B5F9ED-692C-4360-8CE5-861DF999BB37</string>
+				<string>C269101C-6A18-4CA8-BE12-60890AF5D901</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
 				<string></string>
-			</dict>
-			<dict>
-				<key>destinationuid</key>
-				<string>00F8B021-1903-4C35-8A0C-7D647485DE76</string>
-				<key>modifiers</key>
-				<integer>1048576</integer>
-				<key>modifiersubtext</key>
-				<string>Copy to clipboard and paste to frontmost application</string>
-			</dict>
-			<dict>
-				<key>destinationuid</key>
-				<string>677BDBCD-A330-4460-8C0C-9261842ED8DA</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-			</dict>
-			<dict>
-				<key>destinationuid</key>
-				<string>95DA10FB-2310-40DB-B8DB-04C7879F1C3F</string>
-				<key>modifiers</key>
-				<integer>1048576</integer>
-				<key>modifiersubtext</key>
-				<string></string>
+				<key>vitoclose</key>
+				<false/>
 			</dict>
 		</array>
 		<key>E1267099-BC5D-4878-B477-8D0EB671EC24</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>AA158B68-87F0-45A5-B7B2-7A3C5C5AC25E</string>
+				<string>30266CFD-6382-4FA7-8838-6141EC90CBA6</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
 				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>7E3513D5-CBDB-44E4-B033-580134955C86</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
 			</dict>
 		</array>
 		<key>E8031F55-6E9C-4712-9435-77EC8EBC7525</key>
@@ -162,6 +224,8 @@
 				<integer>0</integer>
 				<key>modifiersubtext</key>
 				<string></string>
+				<key>vitoclose</key>
+				<false/>
 			</dict>
 		</array>
 	</dict>
@@ -178,21 +242,8 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>autopaste</key>
+				<key>alfredfiltersresults</key>
 				<false/>
-				<key>clipboardtext</key>
-				<string>{query}</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.output.clipboard</string>
-			<key>uid</key>
-			<string>02B5F9ED-692C-4360-8CE5-861DF999BB37</string>
-			<key>version</key>
-			<integer>0</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>argumenttype</key>
 				<integer>1</integer>
 				<key>escaping</key>
@@ -211,6 +262,10 @@
 				<string>Crunching random bits…</string>
 				<key>script</key>
 				<string>/usr/bin/python pwgen.py generate "{query}"</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
 				<key>subtext</key>
 				<string>Generate password of given strength</string>
 				<key>title</key>
@@ -225,7 +280,51 @@
 			<key>uid</key>
 			<string>DBA8E550-5B42-4A57-AED0-8D70D4AC2327</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>autopaste</key>
+				<false/>
+				<key>clipboardtext</key>
+				<string>{query}</string>
+				<key>transient</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>02B5F9ED-692C-4360-8CE5-861DF999BB37</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.junction</string>
+			<key>uid</key>
+			<string>C269101C-6A18-4CA8-BE12-60890AF5D901</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>inputstring</key>
+				<string>{var:action}</string>
+				<key>matchcasesensitive</key>
+				<true/>
+				<key>matchmode</key>
+				<integer>0</integer>
+				<key>matchstring</key>
+				<string>copy</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.filter</string>
+			<key>uid</key>
+			<string>01164317-C90B-46F2-BF74-4A229934CD6A</string>
+			<key>version</key>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -234,17 +333,40 @@
 				<true/>
 				<key>clipboardtext</key>
 				<string>{query}</string>
+				<key>transient</key>
+				<false/>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.output.clipboard</string>
 			<key>uid</key>
 			<string>00F8B021-1903-4C35-8A0C-7D647485DE76</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>inputstring</key>
+				<string>{var:action}</string>
+				<key>matchcasesensitive</key>
+				<true/>
+				<key>matchmode</key>
+				<integer>0</integer>
+				<key>matchstring</key>
+				<string>paste</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.filter</string>
+			<key>uid</key>
+			<string>5568F053-9880-44ED-A921-29476B7B1353</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
 				<key>argumenttype</key>
 				<integer>1</integer>
 				<key>escaping</key>
@@ -263,6 +385,10 @@
 				<string>Crunching random bits…</string>
 				<key>script</key>
 				<string>/usr/bin/python pwgen.py generate --length "{query}"</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
 				<key>subtext</key>
 				<string>Generate password of given length</string>
 				<key>title</key>
@@ -277,57 +403,43 @@
 			<key>uid</key>
 			<string>11DCEFA6-93E8-4C7A-ACB2-0AE37EE16C7A</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>lastpathcomponent</key>
+				<key>concurrently</key>
 				<false/>
-				<key>onlyshowifquerypopulated</key>
-				<false/>
-				<key>output</key>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>/usr/bin/python pwgen.py notify "$notification"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
 				<integer>0</integer>
-				<key>removeextension</key>
-				<false/>
-				<key>sticky</key>
-				<false/>
-				<key>text</key>
-				<string>Password Copied to Clipboard</string>
-				<key>title</key>
-				<string>Password Generator</string>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.output.notification</string>
+			<string>alfred.workflow.action.script</string>
 			<key>uid</key>
-			<string>677BDBCD-A330-4460-8C0C-9261842ED8DA</string>
+			<string>32AC182F-19A8-46E4-9706-55AFD22A314D</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>lastpathcomponent</key>
-				<false/>
-				<key>onlyshowifquerypopulated</key>
-				<false/>
-				<key>output</key>
-				<integer>0</integer>
-				<key>removeextension</key>
-				<false/>
-				<key>sticky</key>
-				<false/>
-				<key>text</key>
-				<string>Password Copied to Clipboard</string>
-				<key>title</key>
-				<string>Password Generator</string>
+				<key>triggerid</key>
+				<string>conf</string>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.output.notification</string>
+			<string>alfred.workflow.trigger.external</string>
 			<key>uid</key>
-			<string>95DA10FB-2310-40DB-B8DB-04C7879F1C3F</string>
+			<string>86710CD5-FF9A-48A1-9128-DC382924805E</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -338,6 +450,10 @@
 				<integer>0</integer>
 				<key>script</key>
 				<string>/usr/bin/python pwgen.py {query}</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
 				<key>type</key>
 				<integer>0</integer>
 			</dict>
@@ -346,36 +462,13 @@
 			<key>uid</key>
 			<string>98EFEE54-A77F-43F1-832C-0EA448AEDE68</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>lastpathcomponent</key>
+				<key>alfredfiltersresults</key>
 				<false/>
-				<key>onlyshowifquerypopulated</key>
-				<true/>
-				<key>output</key>
-				<integer>0</integer>
-				<key>removeextension</key>
-				<false/>
-				<key>sticky</key>
-				<false/>
-				<key>text</key>
-				<string>{query}</string>
-				<key>title</key>
-				<string>Configuration</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.output.notification</string>
-			<key>uid</key>
-			<string>AA158B68-87F0-45A5-B7B2-7A3C5C5AC25E</string>
-			<key>version</key>
-			<integer>0</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>argumenttype</key>
 				<integer>1</integer>
 				<key>escaping</key>
@@ -394,6 +487,10 @@
 				<string>Loading Settings…</string>
 				<key>script</key>
 				<string>/usr/bin/python pwgen.py conf "{query}"</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
 				<key>subtext</key>
 				<string>View and edit workflow settings</string>
 				<key>title</key>
@@ -408,7 +505,7 @@
 			<key>uid</key>
 			<string>76F9A947-6B5B-412D-AAAE-E0518115DE1D</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -421,15 +518,13 @@
 			<key>uid</key>
 			<string>E8031F55-6E9C-4712-9435-77EC8EBC7525</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
 				<key>argumenttype</key>
 				<integer>0</integer>
-				<key>keyword</key>
-				<string>:pwlength</string>
 				<key>subtext</key>
 				<string>Enter new default password length</string>
 				<key>text</key>
@@ -442,7 +537,30 @@
 			<key>uid</key>
 			<string>CB7811B1-3B34-463E-9039-C5ABDB488185</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>/usr/bin/python pwgen.py notify "$1"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>30266CFD-6382-4FA7-8838-6141EC90CBA6</string>
+			<key>version</key>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -453,6 +571,10 @@
 				<integer>102</integer>
 				<key>script</key>
 				<string>/usr/bin/python pwgen.py set pw_length {query}</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
 				<key>type</key>
 				<integer>0</integer>
 			</dict>
@@ -461,28 +583,7 @@
 			<key>uid</key>
 			<string>E1267099-BC5D-4878-B477-8D0EB671EC24</string>
 			<key>version</key>
-			<integer>0</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argumenttype</key>
-				<integer>0</integer>
-				<key>keyword</key>
-				<string>:pwstrength</string>
-				<key>subtext</key>
-				<string>Enter new default password strength</string>
-				<key>text</key>
-				<string>Change Password Strength</string>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
-			<key>uid</key>
-			<string>86437401-8D94-40C2-9015-CD654C6CB51C</string>
-			<key>version</key>
-			<integer>0</integer>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -495,7 +596,7 @@
 			<key>uid</key>
 			<string>11F99880-019E-45DF-98D4-B539E3799209</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -506,6 +607,10 @@
 				<integer>102</integer>
 				<key>script</key>
 				<string>/usr/bin/python pwgen.py set pw_strength {query}</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
 				<key>type</key>
 				<integer>0</integer>
 			</dict>
@@ -514,90 +619,204 @@
 			<key>uid</key>
 			<string>7D8BF49A-E602-40BF-BDC5-F25C7D12E9CB</string>
 			<key>version</key>
-			<integer>0</integer>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>externaltriggerid</key>
+				<string>conf</string>
+				<key>passinputasargument</key>
+				<false/>
+				<key>passvariables</key>
+				<false/>
+				<key>workflowbundleid</key>
+				<string>self</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.callexternaltrigger</string>
+			<key>uid</key>
+			<string>7E3513D5-CBDB-44E4-B033-580134955C86</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>subtext</key>
+				<string>Enter new default password strength</string>
+				<key>text</key>
+				<string>Change Password Strength</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>86437401-8D94-40C2-9015-CD654C6CB51C</string>
+			<key>version</key>
+			<integer>1</integer>
 		</dict>
 	</array>
 	<key>readme</key>
-	<string></string>
+	<string>Generate passwords with Alfred.
+
+Comes with a bunch of useful generators (recipes) built in, and you can easily add your own custom ones.</string>
 	<key>uidata</key>
 	<dict>
 		<key>00F8B021-1903-4C35-8A0C-7D647485DE76</key>
 		<dict>
+			<key>xpos</key>
+			<integer>600</integer>
 			<key>ypos</key>
-			<real>130</real>
+			<integer>150</integer>
+		</dict>
+		<key>01164317-C90B-46F2-BF74-4A229934CD6A</key>
+		<dict>
+			<key>note</key>
+			<string>action = copy</string>
+			<key>xpos</key>
+			<integer>470</integer>
+			<key>ypos</key>
+			<integer>50</integer>
 		</dict>
 		<key>02B5F9ED-692C-4360-8CE5-861DF999BB37</key>
 		<dict>
+			<key>xpos</key>
+			<integer>600</integer>
 			<key>ypos</key>
-			<real>10</real>
+			<integer>20</integer>
 		</dict>
 		<key>11DCEFA6-93E8-4C7A-ACB2-0AE37EE16C7A</key>
 		<dict>
+			<key>note</key>
+			<string>Generate passwords of given length</string>
+			<key>xpos</key>
+			<integer>30</integer>
 			<key>ypos</key>
-			<real>250</real>
+			<integer>180</integer>
 		</dict>
 		<key>11F99880-019E-45DF-98D4-B539E3799209</key>
 		<dict>
+			<key>xpos</key>
+			<integer>30</integer>
 			<key>ypos</key>
-			<real>730</real>
+			<integer>780</integer>
 		</dict>
-		<key>677BDBCD-A330-4460-8C0C-9261842ED8DA</key>
+		<key>30266CFD-6382-4FA7-8838-6141EC90CBA6</key>
 		<dict>
+			<key>note</key>
+			<string>Show notification</string>
+			<key>xpos</key>
+			<integer>700</integer>
 			<key>ypos</key>
-			<real>250</real>
+			<integer>630</integer>
+		</dict>
+		<key>32AC182F-19A8-46E4-9706-55AFD22A314D</key>
+		<dict>
+			<key>note</key>
+			<string>Show notification</string>
+			<key>xpos</key>
+			<integer>430</integer>
+			<key>ypos</key>
+			<integer>310</integer>
+		</dict>
+		<key>5568F053-9880-44ED-A921-29476B7B1353</key>
+		<dict>
+			<key>note</key>
+			<string>action = paste</string>
+			<key>xpos</key>
+			<integer>470</integer>
+			<key>ypos</key>
+			<integer>180</integer>
 		</dict>
 		<key>76F9A947-6B5B-412D-AAAE-E0518115DE1D</key>
 		<dict>
+			<key>note</key>
+			<string>Show configuration options</string>
+			<key>xpos</key>
+			<integer>230</integer>
 			<key>ypos</key>
-			<real>490</real>
+			<integer>460</integer>
 		</dict>
 		<key>7D8BF49A-E602-40BF-BDC5-F25C7D12E9CB</key>
 		<dict>
+			<key>xpos</key>
+			<integer>430</integer>
 			<key>ypos</key>
-			<real>730</real>
+			<integer>780</integer>
+		</dict>
+		<key>7E3513D5-CBDB-44E4-B033-580134955C86</key>
+		<dict>
+			<key>xpos</key>
+			<integer>700</integer>
+			<key>ypos</key>
+			<integer>780</integer>
 		</dict>
 		<key>86437401-8D94-40C2-9015-CD654C6CB51C</key>
 		<dict>
+			<key>xpos</key>
+			<integer>230</integer>
 			<key>ypos</key>
-			<real>730</real>
+			<integer>780</integer>
 		</dict>
-		<key>95DA10FB-2310-40DB-B8DB-04C7879F1C3F</key>
+		<key>86710CD5-FF9A-48A1-9128-DC382924805E</key>
 		<dict>
+			<key>xpos</key>
+			<integer>30</integer>
 			<key>ypos</key>
-			<real>370</real>
+			<integer>460</integer>
 		</dict>
 		<key>98EFEE54-A77F-43F1-832C-0EA448AEDE68</key>
 		<dict>
+			<key>xpos</key>
+			<integer>430</integer>
 			<key>ypos</key>
-			<real>490</real>
+			<integer>460</integer>
 		</dict>
-		<key>AA158B68-87F0-45A5-B7B2-7A3C5C5AC25E</key>
+		<key>C269101C-6A18-4CA8-BE12-60890AF5D901</key>
 		<dict>
+			<key>xpos</key>
+			<integer>260</integer>
 			<key>ypos</key>
-			<real>490</real>
+			<integer>50</integer>
 		</dict>
 		<key>CB7811B1-3B34-463E-9039-C5ABDB488185</key>
 		<dict>
+			<key>xpos</key>
+			<integer>230</integer>
 			<key>ypos</key>
-			<real>610</real>
+			<integer>630</integer>
 		</dict>
 		<key>DBA8E550-5B42-4A57-AED0-8D70D4AC2327</key>
 		<dict>
+			<key>note</key>
+			<string>Generate passwords of given strength</string>
+			<key>xpos</key>
+			<integer>30</integer>
 			<key>ypos</key>
-			<real>130</real>
+			<integer>20</integer>
 		</dict>
 		<key>E1267099-BC5D-4878-B477-8D0EB671EC24</key>
 		<dict>
+			<key>xpos</key>
+			<integer>430</integer>
 			<key>ypos</key>
-			<real>610</real>
+			<integer>630</integer>
 		</dict>
 		<key>E8031F55-6E9C-4712-9435-77EC8EBC7525</key>
 		<dict>
+			<key>xpos</key>
+			<integer>30</integer>
 			<key>ypos</key>
-			<real>610</real>
+			<integer>630</integer>
 		</dict>
 	</dict>
+	<key>version</key>
+	<string>2.0</string>
 	<key>webaddress</key>
-	<string></string>
+	<string>https://github.com/deanishe/alfred-pwgen</string>
 </dict>
 </plist>
