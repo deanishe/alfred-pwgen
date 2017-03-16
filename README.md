@@ -287,7 +287,7 @@ The `data` property is used by the `entropy` property and `password()` method on
 **Important:** `data` must return a sequence (`string`, `list` or `tuple`) *not* a generator or `set`. If `random.choice()` chokes on it, it's no good.
 
 
-### Examples ###
+### Examples ###
 
 A generator to produce German passwords (i.e. possibly including letters like 'ü' or 'ä'):
 
