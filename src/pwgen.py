@@ -327,11 +327,8 @@ class PasswordApp(object):
             it.setvar('notification', 'Password copied to clipboard')
             it.setvar('action', 'copy')
 
-            m = it.add_modifier(
-                'cmd',
-                subtitle='Copy to clipboard and paste to frontmost application',
-                arg=pw,
-                valid=True)
+            m = it.add_modifier('cmd', subtitle='Copy to clipboard and '
+                                'paste to frontmost application', arg=pw)
             m.setvar('action', 'paste')
 
         wf.send_feedback()

@@ -588,19 +588,6 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>triggerid</key>
-				<string>pw_strength</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.trigger.external</string>
-			<key>uid</key>
-			<string>11F99880-019E-45DF-98D4-B539E3799209</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>concurrently</key>
 				<false/>
 				<key>escaping</key>
@@ -656,6 +643,19 @@
 			<string>alfred.workflow.input.keyword</string>
 			<key>uid</key>
 			<string>86437401-8D94-40C2-9015-CD654C6CB51C</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>triggerid</key>
+				<string>pw_strength</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.external</string>
+			<key>uid</key>
+			<string>11F99880-019E-45DF-98D4-B539E3799209</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -815,7 +815,7 @@ Comes with a bunch of useful generators (recipes) built in, and you can easily a
 		</dict>
 	</dict>
 	<key>version</key>
-	<string>2.0</string>
+	<string>2.0.1</string>
 	<key>webaddress</key>
 	<string>https://github.com/deanishe/alfred-pwgen</string>
 </dict>
