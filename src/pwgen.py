@@ -38,7 +38,7 @@ import subprocess
 import sys
 
 from docopt import docopt
-from workflow import Workflow3, ICON_WARNING, ICON_HELP, ICON_SETTINGS
+from workflow import Workflow3
 
 from generators import get_generators, ENTROPY_PER_LEVEL, import_generators
 
@@ -52,9 +52,21 @@ STRENGTH_WEAK = 64
 # More entropy means a strong password
 STRENGTH_STRONG = 96
 
+ICON_WORKFLOW = 'icon.png'
+
 ICON_STRONG = 'icons/strong.icns'
-ICON_WEAK = 'icons/weak.icns'
 ICON_OKAY = 'icons/okay.icns'
+ICON_WEAK = 'icons/weak.icns'
+
+ICON_TOGGLE_ON = 'icons/toggle-on.icns'
+ICON_TOGGLE_OFF = 'icons/toggle-off.icns'
+
+ICON_UPDATE_AVAILABLE = 'icons/update-available.icns'
+ICON_UPDATE_NONE = 'icons/update-none.icns'
+
+ICON_HELP = 'icons/help.icns'
+ICON_SETTINGS = 'icons/option.icns'
+ICON_WARNING = 'icons/warning.icns'
 
 # Alfred keywords
 KEYWORD_GEN = 'pwgen'
@@ -238,7 +250,7 @@ class PasswordApp(object):
             wf.add_item('An Update is Available',
                         '↩ or ⇥ to install update',
                         autocomplete='workflow:update',
-                        icon='icons/update-available.icns')
+                        icon=ICON_UPDATE_AVAILABLE)
 
         # Determine mode
         if args.get('--length'):
@@ -348,7 +360,7 @@ class PasswordApp(object):
                     'title': 'An Update is Available',
                     'subtitle': '↩ or ⇥ to install update',
                     'autocomplete': 'workflow:update',
-                    'icon': 'icons/update-available.icns',
+                    'icon': ICON_UPDATE_AVAILABLE,
                 }
             )
         else:
@@ -357,7 +369,7 @@ class PasswordApp(object):
                     'title': 'No Update Available',
                     'subtitle': '↩ or ⇥ to check for an update',
                     'autocomplete': 'workflow:update',
-                    'icon': 'icons/update-none.icns',
+                    'icon': ICON_UPDATE_NONE,
                 }
             )
 
@@ -396,9 +408,9 @@ class PasswordApp(object):
 
         # Show notifications
         if wf.settings.get('suppress_notifications'):
-            icon = 'icons/toggle_off.icns'
+            icon = ICON_TOGGLE_OFF
         else:
-            icon = 'icons/toggle_on.icns'
+            icon = ICON_TOGGLE_ON
         options.append(
             {
                 'title': 'Show notifications',
@@ -411,9 +423,9 @@ class PasswordApp(object):
 
         # Strength bar
         if wf.settings.get('strength_bar'):
-            icon = 'icons/toggle_on.icns'
+            icon = ICON_TOGGLE_ON
         else:
-            icon = 'icons/toggle_off.icns'
+            icon = ICON_TOGGLE_OFF
         options.append(
             {
                 'title': 'Strength Bar',
@@ -431,9 +443,9 @@ class PasswordApp(object):
 
         for gen in generators:
             if gen.id in active_generators:
-                icon = 'icons/toggle_on.icns'
+                icon = ICON_TOGGLE_ON
             else:
-                icon = 'icons/toggle_off.icns'
+                icon = ICON_TOGGLE_OFF
             options.append(
                 {
                     'title': 'Generator : {0}'.format(gen.name),
