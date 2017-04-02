@@ -16,12 +16,14 @@ Usage:
     pwgen.py generate [-v|-q|-d] [<strength>]
     pwgen.py generate [-v|-q|-d] --length [<length>]
     pwgen.py conf [-v|-q|-d] [<query>]
+    pwgen.py copy [-v|-q|-d] [-p] <password>
     pwgen.py notify [-v|-q|-d] <message>
     pwgen.py set [-v|-q|-d] <key> [<value>]
     pwgen.py toggle [-v|-q|-d] <genid>
     pwgen.py (-h|--version)
 
 Options:
+    -p, --paste    Also paste password to frontmost application
     -h, --help     Show this message and quit
     --version      Show version and exit
     -v, --verbose  Show INFO-level messages and above
@@ -175,6 +177,7 @@ class PasswordApp(object):
     """Workflow application."""
 
     def __init__(self, wf):
+        """Create new `PasswordApp` with the active `Workflow` object."""
         self.wf = wf
         self.query = None
         self.args = None
@@ -198,18 +201,21 @@ class PasswordApp(object):
         log.debug("Set log level to %s" %
                   logging.getLevelName(log.level))
 
-        log.debug('args : %r', args)
+        log.debug('args=\n%r', args)
 
-        if args.get('generate'):
-            return self.do_generate()
-        elif args.get('conf'):
-            return self.do_conf()
-        elif args.get('notify'):
-            return self.do_notify()
-        elif args.get('toggle'):
-            return self.do_toggle()
-        elif args.get('set'):
-            return self.do_set()
+        for action in ('conf',
+                       'copy',
+                       'generate',
+                       'notify',
+                       'set',
+                       'toggle'):
+
+            if args.get(action):
+                meth = 'do_' + action
+                log.debug('calling %r ...', meth)
+                return getattr(self, meth)()
+
+        raise SystemExit('unknown action')
 
     def load_user_generators(self):
         """Ensure any user generators are loaded."""
@@ -343,6 +349,16 @@ class PasswordApp(object):
                                 'paste to frontmost application', arg=pw)
             m.setvar('action', 'paste')
 
+            m = it.add_modifier('alt',
+                                subtitle='Copy to clipboard as public data',
+                                arg=pw)
+            m.setvar('action', 'public-copy')
+
+            m = it.add_modifier('ctrl',
+                                subtitle='Copy to clipboard as public data '
+                                'and paste to frontmost application', arg=pw)
+            m.setvar('action', 'public-paste')
+
         wf.send_feedback()
         return 0
 
@@ -471,6 +487,27 @@ class PasswordApp(object):
         wf.send_feedback()
         return 0
 
+    def do_copy(self):
+        """Securely copy (and optionally paste) password to pasteboard.
+
+        Mark pasteboard data as concealed so clipboard history managers
+        ignore them.
+
+        """
+        import pasteboard as pb
+
+        password = self.args['<password>']
+        if not password:
+            raise ValueError('Password is empty')
+
+        pb.copy(password, private=True)
+        log.info('password copied to clipboard')
+
+        if self.args['--paste']:
+            # time.sleep(0.1)  # give copy time to complete
+            log.debug('pasting ...')
+            pb.paste()
+
     def do_set(self):
         """Set password strength/length."""
         wf = self.wf
@@ -504,6 +541,8 @@ class PasswordApp(object):
         wf = self.wf
         args = self.args
         gen_id = args.get('<genid>')
+
+        log.debug('toggling=%r', gen_id)
 
         # Strength bar toggle
         if gen_id == 'strength_bar':
@@ -543,12 +582,12 @@ class PasswordApp(object):
 
             active_generators = wf.settings.get('generators', [])[:]
             if gen_id in active_generators:
-                log.debug('Turning generator `%s` off...', gen.name)
                 active_generators.remove(gen_id)
+                log.info('Turned generator `%s` off', gen.name)
                 mode = 'off'
             else:
-                log.debug('Turning generator `%s` on...', gen.name)
                 active_generators.append(gen_id)
+                log.info('Turned generator `%s` on', gen.name)
                 mode = 'on'
             log.debug('Active generators : %s', active_generators)
             wf.settings['generators'] = active_generators

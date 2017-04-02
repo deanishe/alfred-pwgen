@@ -31,12 +31,35 @@
 				<key>vitoclose</key>
 				<false/>
 			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>32AC182F-19A8-46E4-9706-55AFD22A314D</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
 		</array>
 		<key>11F99880-019E-45DF-98D4-B539E3799209</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
 				<string>86437401-8D94-40C2-9015-CD654C6CB51C</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>34A02242-6362-4BB1-BFBC-9F3686D6C2A7</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>FE07A3FC-7EB4-4121-97C5-1AF52945DAB2</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -133,6 +156,19 @@
 				<false/>
 			</dict>
 		</array>
+		<key>BE6A6E8D-B81B-40CA-8A79-AF4175D4A270</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>11B02FEF-F236-4F72-BE2A-797325C14B3D</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>C269101C-6A18-4CA8-BE12-60890AF5D901</key>
 		<array>
 			<dict>
@@ -157,7 +193,17 @@
 			</dict>
 			<dict>
 				<key>destinationuid</key>
-				<string>32AC182F-19A8-46E4-9706-55AFD22A314D</string>
+				<string>34A02242-6362-4BB1-BFBC-9F3686D6C2A7</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>BE6A6E8D-B81B-40CA-8A79-AF4175D4A270</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -184,6 +230,16 @@
 			<dict>
 				<key>destinationuid</key>
 				<string>C269101C-6A18-4CA8-BE12-60890AF5D901</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>32AC182F-19A8-46E4-9706-55AFD22A314D</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -300,14 +356,6 @@
 			<integer>2</integer>
 		</dict>
 		<dict>
-			<key>type</key>
-			<string>alfred.workflow.utility.junction</string>
-			<key>uid</key>
-			<string>C269101C-6A18-4CA8-BE12-60890AF5D901</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
 			<key>config</key>
 			<dict>
 				<key>inputstring</key>
@@ -317,12 +365,20 @@
 				<key>matchmode</key>
 				<integer>0</integer>
 				<key>matchstring</key>
-				<string>copy</string>
+				<string>public-copy</string>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.utility.filter</string>
 			<key>uid</key>
 			<string>01164317-C90B-46F2-BF74-4A229934CD6A</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.junction</string>
+			<key>uid</key>
+			<string>C269101C-6A18-4CA8-BE12-60890AF5D901</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -346,6 +402,29 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>/usr/bin/python pwgen.py notify "$notification"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>32AC182F-19A8-46E4-9706-55AFD22A314D</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>inputstring</key>
 				<string>{var:action}</string>
 				<key>matchcasesensitive</key>
@@ -353,7 +432,7 @@
 				<key>matchmode</key>
 				<integer>0</integer>
 				<key>matchstring</key>
-				<string>paste</string>
+				<string>public-paste</string>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.utility.filter</string>
@@ -413,7 +492,7 @@
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
-				<string>/usr/bin/python pwgen.py notify "$notification"</string>
+				<string>/usr/bin/python pwgen.py copy $1</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
@@ -424,7 +503,54 @@
 			<key>type</key>
 			<string>alfred.workflow.action.script</string>
 			<key>uid</key>
-			<string>32AC182F-19A8-46E4-9706-55AFD22A314D</string>
+			<string>FE07A3FC-7EB4-4121-97C5-1AF52945DAB2</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>inputstring</key>
+				<string>{var:action}</string>
+				<key>matchcasesensitive</key>
+				<true/>
+				<key>matchmode</key>
+				<integer>0</integer>
+				<key>matchstring</key>
+				<string>copy</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.filter</string>
+			<key>uid</key>
+			<string>34A02242-6362-4BB1-BFBC-9F3686D6C2A7</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>0</integer>
+				<key>script</key>
+				<string>echo '.' &gt;&amp;2
+echo '/----------------------\' &gt;&amp;2
+echo "query=$1" &gt;&amp;2
+echo '\----------------------/' &gt;&amp;2
+
+/usr/bin/python pwgen.py $1</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>98EFEE54-A77F-43F1-832C-0EA448AEDE68</string>
 			<key>version</key>
 			<integer>2</integer>
 		</dict>
@@ -440,29 +566,6 @@
 			<string>86710CD5-FF9A-48A1-9128-DC382924805E</string>
 			<key>version</key>
 			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>concurrently</key>
-				<false/>
-				<key>escaping</key>
-				<integer>0</integer>
-				<key>script</key>
-				<string>/usr/bin/python pwgen.py $1</string>
-				<key>scriptargtype</key>
-				<integer>1</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>type</key>
-				<integer>0</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.script</string>
-			<key>uid</key>
-			<string>98EFEE54-A77F-43F1-832C-0EA448AEDE68</string>
-			<key>version</key>
-			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -510,13 +613,42 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>triggerid</key>
-				<string>pw_length</string>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>/usr/bin/python pwgen.py copy --paste $1</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.trigger.external</string>
+			<string>alfred.workflow.action.script</string>
 			<key>uid</key>
-			<string>E8031F55-6E9C-4712-9435-77EC8EBC7525</string>
+			<string>11B02FEF-F236-4F72-BE2A-797325C14B3D</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>inputstring</key>
+				<string>{var:action}</string>
+				<key>matchcasesensitive</key>
+				<true/>
+				<key>matchmode</key>
+				<integer>0</integer>
+				<key>matchstring</key>
+				<string>paste</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.filter</string>
+			<key>uid</key>
+			<string>BE6A6E8D-B81B-40CA-8A79-AF4175D4A270</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -565,6 +697,19 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>triggerid</key>
+				<string>pw_length</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.external</string>
+			<key>uid</key>
+			<string>E8031F55-6E9C-4712-9435-77EC8EBC7525</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>concurrently</key>
 				<false/>
 				<key>escaping</key>
@@ -588,19 +733,13 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>externaltriggerid</key>
-				<string>conf</string>
-				<key>passinputasargument</key>
-				<false/>
-				<key>passvariables</key>
-				<false/>
-				<key>workflowbundleid</key>
-				<string>self</string>
+				<key>triggerid</key>
+				<string>pw_strength</string>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.output.callexternaltrigger</string>
+			<string>alfred.workflow.trigger.external</string>
 			<key>uid</key>
-			<string>7E3513D5-CBDB-44E4-B033-580134955C86</string>
+			<string>11F99880-019E-45DF-98D4-B539E3799209</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -620,19 +759,6 @@
 			<string>alfred.workflow.input.keyword</string>
 			<key>uid</key>
 			<string>86437401-8D94-40C2-9015-CD654C6CB51C</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>triggerid</key>
-				<string>pw_strength</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.trigger.external</string>
-			<key>uid</key>
-			<string>11F99880-019E-45DF-98D4-B539E3799209</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -659,6 +785,25 @@
 			<key>version</key>
 			<integer>2</integer>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>externaltriggerid</key>
+				<string>conf</string>
+				<key>passinputasargument</key>
+				<false/>
+				<key>passvariables</key>
+				<false/>
+				<key>workflowbundleid</key>
+				<string>self</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.callexternaltrigger</string>
+			<key>uid</key>
+			<string>7E3513D5-CBDB-44E4-B033-580134955C86</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
 	</array>
 	<key>readme</key>
 	<string>Generate passwords with Alfred.
@@ -669,25 +814,34 @@ Comes with a bunch of useful generators (recipes) built in, and you can easily a
 		<key>00F8B021-1903-4C35-8A0C-7D647485DE76</key>
 		<dict>
 			<key>xpos</key>
-			<integer>600</integer>
+			<integer>860</integer>
 			<key>ypos</key>
 			<integer>150</integer>
 		</dict>
 		<key>01164317-C90B-46F2-BF74-4A229934CD6A</key>
 		<dict>
 			<key>note</key>
-			<string>action = copy</string>
+			<string>action = public-copy</string>
 			<key>xpos</key>
-			<integer>470</integer>
+			<integer>730</integer>
 			<key>ypos</key>
 			<integer>50</integer>
 		</dict>
 		<key>02B5F9ED-692C-4360-8CE5-861DF999BB37</key>
 		<dict>
 			<key>xpos</key>
-			<integer>600</integer>
+			<integer>860</integer>
 			<key>ypos</key>
 			<integer>20</integer>
+		</dict>
+		<key>11B02FEF-F236-4F72-BE2A-797325C14B3D</key>
+		<dict>
+			<key>note</key>
+			<string>Copy to pasteboard as "concealed" data and paste</string>
+			<key>xpos</key>
+			<integer>860</integer>
+			<key>ypos</key>
+			<integer>460</integer>
 		</dict>
 		<key>11DCEFA6-93E8-4C7A-ACB2-0AE37EE16C7A</key>
 		<dict>
@@ -703,7 +857,7 @@ Comes with a bunch of useful generators (recipes) built in, and you can easily a
 			<key>xpos</key>
 			<integer>30</integer>
 			<key>ypos</key>
-			<integer>780</integer>
+			<integer>810</integer>
 		</dict>
 		<key>30266CFD-6382-4FA7-8838-6141EC90CBA6</key>
 		<dict>
@@ -719,16 +873,25 @@ Comes with a bunch of useful generators (recipes) built in, and you can easily a
 			<key>note</key>
 			<string>Show notification</string>
 			<key>xpos</key>
-			<integer>430</integer>
+			<integer>380</integer>
 			<key>ypos</key>
-			<integer>310</integer>
+			<integer>180</integer>
+		</dict>
+		<key>34A02242-6362-4BB1-BFBC-9F3686D6C2A7</key>
+		<dict>
+			<key>note</key>
+			<string>action = copy</string>
+			<key>xpos</key>
+			<integer>730</integer>
+			<key>ypos</key>
+			<integer>320</integer>
 		</dict>
 		<key>5568F053-9880-44ED-A921-29476B7B1353</key>
 		<dict>
 			<key>note</key>
-			<string>action = paste</string>
+			<string>action = public-paste</string>
 			<key>xpos</key>
-			<integer>470</integer>
+			<integer>730</integer>
 			<key>ypos</key>
 			<integer>180</integer>
 		</dict>
@@ -743,24 +906,28 @@ Comes with a bunch of useful generators (recipes) built in, and you can easily a
 		</dict>
 		<key>7D8BF49A-E602-40BF-BDC5-F25C7D12E9CB</key>
 		<dict>
+			<key>note</key>
+			<string>Set new password strength</string>
 			<key>xpos</key>
 			<integer>430</integer>
 			<key>ypos</key>
-			<integer>780</integer>
+			<integer>810</integer>
 		</dict>
 		<key>7E3513D5-CBDB-44E4-B033-580134955C86</key>
 		<dict>
+			<key>note</key>
+			<string>Show configuration options</string>
 			<key>xpos</key>
 			<integer>700</integer>
 			<key>ypos</key>
-			<integer>780</integer>
+			<integer>810</integer>
 		</dict>
 		<key>86437401-8D94-40C2-9015-CD654C6CB51C</key>
 		<dict>
 			<key>xpos</key>
 			<integer>230</integer>
 			<key>ypos</key>
-			<integer>780</integer>
+			<integer>810</integer>
 		</dict>
 		<key>86710CD5-FF9A-48A1-9128-DC382924805E</key>
 		<dict>
@@ -771,15 +938,26 @@ Comes with a bunch of useful generators (recipes) built in, and you can easily a
 		</dict>
 		<key>98EFEE54-A77F-43F1-832C-0EA448AEDE68</key>
 		<dict>
+			<key>note</key>
+			<string>Change configuration</string>
 			<key>xpos</key>
 			<integer>430</integer>
 			<key>ypos</key>
 			<integer>460</integer>
 		</dict>
+		<key>BE6A6E8D-B81B-40CA-8A79-AF4175D4A270</key>
+		<dict>
+			<key>note</key>
+			<string>action = paste</string>
+			<key>xpos</key>
+			<integer>730</integer>
+			<key>ypos</key>
+			<integer>490</integer>
+		</dict>
 		<key>C269101C-6A18-4CA8-BE12-60890AF5D901</key>
 		<dict>
 			<key>xpos</key>
-			<integer>260</integer>
+			<integer>420</integer>
 			<key>ypos</key>
 			<integer>50</integer>
 		</dict>
@@ -801,6 +979,8 @@ Comes with a bunch of useful generators (recipes) built in, and you can easily a
 		</dict>
 		<key>E1267099-BC5D-4878-B477-8D0EB671EC24</key>
 		<dict>
+			<key>note</key>
+			<string>Set new password length</string>
 			<key>xpos</key>
 			<integer>430</integer>
 			<key>ypos</key>
@@ -813,9 +993,18 @@ Comes with a bunch of useful generators (recipes) built in, and you can easily a
 			<key>ypos</key>
 			<integer>630</integer>
 		</dict>
+		<key>FE07A3FC-7EB4-4121-97C5-1AF52945DAB2</key>
+		<dict>
+			<key>note</key>
+			<string>Copy to pasteboard as "concealed" data</string>
+			<key>xpos</key>
+			<integer>860</integer>
+			<key>ypos</key>
+			<integer>290</integer>
+		</dict>
 	</dict>
 	<key>version</key>
-	<string>2.0.2</string>
+	<string>2.1</string>
 	<key>webaddress</key>
 	<string>https://github.com/deanishe/alfred-pwgen</string>
 </dict>

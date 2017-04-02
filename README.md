@@ -13,6 +13,8 @@ Generate secure random passwords from Alfred. Uses `/dev/urandom` as source of e
 - Shows the strength of each generated password.
 - More convenient that 1Password or the like.
 - More dependable than online generators.
+- Copies passwords as "concealed" data by default (so clipboard managers don't record them)
+
 
 ## Contents ##
 
@@ -52,6 +54,9 @@ Generate secure random passwords from Alfred. Uses `/dev/urandom` as source of e
   - [Version 1.2 (2015-07-31)](#version-12-2015-07-31)
   - [Version 1.3 (2015-11-03)](#version-13-2015-11-03)
   - [Version 2.0 (2017-02-26)](#version-20-2017-02-26)
+  - [Version 2.0.1 (2017-04-01)](#version-201-2017-04-01)
+  - [Version 2.0.2 (2017-04-01)](#version-202-2017-04-01)
+  - [Version 2.1 (2017-04-02)](#version-21-2017-04-02)
 
 
 ## Installation ##
@@ -62,12 +67,16 @@ Download from the [GitHub releases][gh-releases] or [Packal][packal] and double-
 ## Usage ##
 
 - `pwgen [<strength>]` — Generate passwords of specified strength. Default is `3` (96 bits of entropy). See [Password strength](#password-strength) for details.
-    - `↩` or `⌘+C` — Copy the selected password to the clipboard.
-    - `⌘+↩` — Copy the selected password to the clipboard and paste it to the frontmost application.
+    - `↩` — Copy the selected password to the clipboard.
+    - `⌘↩` — Copy the selected password to the clipboard and paste it to the frontmost application.
+    - `⌥↩` or `⌘C` — Copy the selected password to the clipboard *as public data*
+    - `^↩` — Copy the selected password to the clipboard *as public data* and paste it to the frontmost application.
     - `⌘+L` — Show the selected password in Alfred's Large Text window.
 - `pwlen [<length>]` — Generate passwords of specified length. Default is `20`. See [Password strength](#password-strength) for details.
-    - `↩` or `⌘+C` — Copy the selected password to the clipboard.
-    - `⌘+↩` — Copy the selected password to the clipboard and paste it to the frontmost application.
+    - `↩` — Copy the selected password to the clipboard.
+    - `⌘↩` — Copy the selected password to the clipboard and paste it to the frontmost application.
+    - `⌥↩` or `⌘C` — Copy the selected password to the clipboard *as public data*
+    - `^↩` — Copy the selected password to the clipboard *as public data* and paste it to the frontmost application.
     - `⌘+L` — Show the selected password in Alfred's Large Text window.
 - `pwconf [<query>]` — View and edit workflow settings. See [Configuration](#configuration) for details.
 
@@ -109,7 +118,7 @@ Fortunately, every added bit doubles the amount of entropy, so 64 bits is a good
 | 3       | 96&nbsp;bits          | 280 million years                             | Almost anything                           |
 | 4       | 128&nbsp;bits         | billions of times the age of the universe | Toppest-secret stuff, e.g. encryption keys&nbsp;\*\*                           |
 
-\* = based on 45 billion guesses per second.  
+\* = based on 45 billion guesses per second.
 \*\* = *symmetric* encryption keys. SSL certificates, for example, use *asymmetric* keys, which offer much less security per bit. A 1024-bit RSA key has roughly equivalent security to an 80-bit symmetric key.
 
 The default password strength level of 3 (96 bits) provides very secure passwords.
@@ -388,8 +397,24 @@ Initial release
 
 - Icons reflect password strength
 - Alfred 3 only
-- Option to turn notifications off #3
-- Fix syntax error #5
+- Option to turn notifications off [#3][issue3]
+- Fix syntax error [#5][issue5]
+
+
+### Version 2.0.1 (2017-04-01) ###
+
+- Fix paste [#7][pr7]
+
+
+### Version 2.0.2 (2017-04-01) ###
+
+- Fix hanging background processes [#4][issue4]
+- New icons
+
+
+### Version 2.1 (2017-04-02) ###
+
+- Default to "concealed" copy. Clipboard managers will ignore the passwords
 
 
 [demo]: https://github.com/deanishe/alfred-pwgen/raw/master/demo.gif "Alfred Password Generator Demo"
@@ -399,3 +424,10 @@ Initial release
 [gibberish]: http://stackoverflow.com/a/5502875/356942
 [entropy]: https://en.wikipedia.org/wiki/Entropy_(computing)
 [abcs]: https://docs.python.org/2.7/library/abc.html#module-abc
+[issue1]: https://github.com/deanishe/alfred-pwgen/issues/1
+[issue2]: https://github.com/deanishe/alfred-pwgen/issues/2
+[issue3]: https://github.com/deanishe/alfred-pwgen/issues/3
+[issue4]: https://github.com/deanishe/alfred-pwgen/issues/4
+[issue5]: https://github.com/deanishe/alfred-pwgen/issues/5
+[pr6]: https://github.com/deanishe/alfred-pwgen/pulls/6
+[pr7]: https://github.com/deanishe/alfred-pwgen/pulls/7
