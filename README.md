@@ -13,7 +13,7 @@ Generate secure random passwords from Alfred. Uses `/dev/urandom` as source of e
 - Shows the strength of each generated password.
 - More convenient that 1Password or the like.
 - More dependable than online generators.
-- Copies passwords as "concealed" data by default (so clipboard managers don't record them)
+- Copies passwords as "concealed" data by default (so clipboard managers don't record them).
 
 
 ## Contents ##
@@ -414,7 +414,7 @@ Initial release
 
 ### Version 2.1 (2017-04-02) ###
 
-- Default to "concealed" copy. Clipboard managers will ignore the passwords
+- Default to "concealed" copy so clipboard managers will ignore the passwords
 
 
 [demo]: https://github.com/deanishe/alfred-pwgen/raw/master/demo.gif "Alfred Password Generator Demo"
