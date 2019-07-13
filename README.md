@@ -18,6 +18,8 @@ Generate secure random passwords from Alfred. Uses `/dev/urandom` as source of e
 
 ## Contents ##
 
+<!-- MarkdownTOC autolink="true" -->
+
 - [Installation](#installation)
 - [Usage](#usage)
 - [Password strength](#password-strength)
@@ -42,21 +44,27 @@ Generate secure random passwords from Alfred. Uses `/dev/urandom` as source of e
     - [Dictionary Generator](#dictionary-generator)
   - [Inactive generators](#inactive-generators)
     - [Pronounceable Markov Generator](#pronounceable-markov-generator)
+    - [Hexadecimal Generator](#hexadecimal-generator)
     - [German Generator](#german-generator)
     - [German Alphanumeric Generator](#german-alphanumeric-generator)
     - [German Pronounceable Markov Generator](#german-pronounceable-markov-generator)
 - [Custom generators](#custom-generators)
-  - [ Examples](#examples)
+  - [Examples](#examples)
 - [Licensing, thanks](#licensing-thanks)
 - [Changelog](#changelog)
-  - [Version 1.0 (2015-07-28)](#version-10-2015-07-28)
-  - [Version 1.1 (2015-07-28)](#version-11-2015-07-28)
-  - [Version 1.2 (2015-07-31)](#version-12-2015-07-31)
-  - [Version 1.3 (2015-11-03)](#version-13-2015-11-03)
-  - [Version 2.0 (2017-02-26)](#version-20-2017-02-26)
-  - [Version 2.0.1 (2017-04-01)](#version-201-2017-04-01)
-  - [Version 2.0.2 (2017-04-01)](#version-202-2017-04-01)
-  - [Version 2.1 (2017-04-02)](#version-21-2017-04-02)
+  - [Version 1.0 \(2015-07-28\)](#version-10-2015-07-28)
+  - [Version 1.1 \(2015-07-28\)](#version-11-2015-07-28)
+  - [Version 1.2 \(2015-07-31\)](#version-12-2015-07-31)
+  - [Version 1.3 \(2015-11-03\)](#version-13-2015-11-03)
+  - [Version 2.0 \(2017-02-26\)](#version-20-2017-02-26)
+  - [Version 2.0.1 \(2017-04-01\)](#version-201-2017-04-01)
+  - [Version 2.0.2 \(2017-04-01\)](#version-202-2017-04-01)
+  - [Version 2.1 \(2017-04-02\)](#version-21-2017-04-02)
+  - [Version 2.1.1 \(2017-04-19\)](#version-211-2017-04-19)
+  - [Version 2.1.2 \(2017-12-10\)](#version-212-2017-12-10)
+  - [Version 2.1.3 \(2019-07-13\)](#version-213-2019-07-13)
+
+<!-- /MarkdownTOC -->
 
 
 ## Installation ##
@@ -415,6 +423,21 @@ Initial release
 ### Version 2.1 (2017-04-02) ###
 
 - Default to "concealed" copy so clipboard managers will ignore the passwords
+
+
+### Version 2.1.1 (2017-04-19) ###
+
+- Update dependencies
+
+
+### Version 2.1.2 (2017-12-10) ###
+
+- Update dependencies
+
+
+### Version 2.1.3 (2019-07-13) ###
+
+- Add Alfred 4 support
 
 
 [demo]: https://github.com/deanishe/alfred-pwgen/raw/master/demo.gif "Alfred Password Generator Demo"
