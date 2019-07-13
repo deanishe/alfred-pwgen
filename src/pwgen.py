@@ -36,11 +36,11 @@ from __future__ import print_function, unicode_literals, absolute_import
 
 import logging
 import os
-import subprocess
 import sys
 
 from docopt import docopt
 from workflow import Workflow3
+from workflow.util import run_trigger
 
 from generators import get_generators, ENTROPY_PER_LEVEL, import_generators
 
@@ -101,32 +101,6 @@ UPDATE_SETTINGS = {
 }
 
 HELP_URL = 'https://github.com/deanishe/alfred-pwgen#alfred-password-generator'
-
-# AppleScript to call Alfred
-ALFRED_AS = """\
-tell application "Alfred 3"
-    {0}
-end tell
-"""
-
-
-def call_alfred_search(query):
-    """Call Alfred with ``query``."""
-    command = 'search "{0}"'.format(query)
-    cmd = [b'/usr/bin/osascript', b'-e',
-           ALFRED_AS.format(command).encode('utf-8')]
-    subprocess.call(cmd)
-
-
-def call_external_trigger(name, arg=None):
-    """Call External Trigger ``name`` with optional ``arg``."""
-    command = 'run trigger "{0}" in workflow "{1}"'.format(name, wf.bundleid)
-    if arg is not None:
-        command += ' with argument "{0}"'.format(arg)
-
-    cmd = [b'/usr/bin/osascript', b'-e',
-           ALFRED_AS.format(command).encode('utf-8')]
-    subprocess.call(cmd)
 
 
 def pw_strength_meter(entropy):
@@ -515,13 +489,13 @@ class PasswordApp(object):
         key = args.get('<key>')
         value = args.get('<value>')
         if not value:
-            return call_external_trigger(key, '')
+            return run_trigger(key, arg='')
 
         if not value.isdigit():
             msg = '`{0}` is not a number'.format(value)
             log.critical(msg)
             print('ERROR : {0}'.format(msg))
-            call_alfred_search(KEYWORD_CONF + ' ')
+            run_trigger('conf')
             return 1
 
         value = int(value)
@@ -533,7 +507,6 @@ class PasswordApp(object):
             wf.settings['pw_length'] = value
             print('Set default password length to {0}'.format(value))
 
-        # call_alfred_search(KEYWORD_CONF + ' ')
         return 0
 
     def do_toggle(self):
@@ -593,8 +566,8 @@ class PasswordApp(object):
             wf.settings['generators'] = active_generators
 
             print("Turned generator '{0}' {1}".format(gen.name, mode))
-        # call_alfred_search(KEYWORD_CONF + ' ')
-        call_external_trigger('conf')
+
+        run_trigger('conf')
         return 0
 
 
