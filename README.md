@@ -11,7 +11,7 @@ Generate secure random passwords from Alfred. Uses `/dev/urandom` as source of e
 - Passwords can be generated based on strength or length.
 - Offers multiple generators, including based on real words and pronounceable pseudo-words generated with Markov chains.
 - Shows the strength of each generated password.
-- More convenient that 1Password or the like.
+- More convenient than 1Password or the like.
 - More dependable than online generators.
 - Copies passwords as "concealed" data by default (so clipboard managers don't record them).
 
