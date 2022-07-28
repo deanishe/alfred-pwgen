@@ -197,7 +197,7 @@ class PasswordApp(object):
 
         # Create user generator directory
         if not os.path.exists(user_generator_dir):
-            os.makedirs(user_generator_dir, 0700)
+            os.makedirs(user_generator_dir, 0o700)
         else:  # Import user generators
             import_generators(user_generator_dir)
 
