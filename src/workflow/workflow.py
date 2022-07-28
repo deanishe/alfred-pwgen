@@ -43,8 +43,8 @@ except ImportError:  # pragma: no cover
     import xml.etree.ElementTree as ET
 
 # imported to maintain API
-from util import AcquisitionError  # noqa: F401
-from util import (
+from .util import AcquisitionError  # noqa: F401
+from .util import (
     atomic_writer,
     LockFile,
     uninterruptible,
