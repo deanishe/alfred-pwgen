@@ -99,14 +99,15 @@ class Variables(dict):
 
         return json.dumps(self.obj)
 
-    def __str__(self):
-        """Convert to ``alfredworkflow`` JSON object.
-
-        Returns:
-            str: UTF-8 encoded ``alfredworkflow`` JSON object
-
-        """
-        return unicode(self).encode('utf-8')
+    # TODO: remove unicode?
+    # def __str__(self):
+    #     """Convert to ``alfredworkflow`` JSON object.
+    #
+    #     Returns:
+    #         str: UTF-8 encoded ``alfredworkflow`` JSON object
+    #
+    #     """
+    #     return unicode(self).encode('utf-8')
 
 
 class Modifier(object):

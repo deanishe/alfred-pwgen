@@ -326,9 +326,12 @@ class Response(object):
         :rtype: unicode or str
 
         """
-        if self.encoding:
-            return unicodedata.normalize('NFC', unicode(self.content,
-                                                        self.encoding))
+
+        # TODO: remove unicode?
+        # if self.encoding:
+        #     return unicodedata.normalize('NFC', unicode(self.content,
+        #                                                 self.encoding))
+
         return self.content
 
     def iter_content(self, chunk_size=4096, decode_unicode=False):

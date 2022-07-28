@@ -1059,7 +1059,7 @@ class Workflow(object):
             if self.alfred_env.get('workflow_bundleid'):
                 self._bundleid = self.alfred_env.get('workflow_bundleid')
             else:
-                self._bundleid = unicode(self.info['bundleid'], 'utf-8')
+                self._bundleid = self.info['bundleid']
 
         return self._bundleid
 
@@ -2042,7 +2042,7 @@ class Workflow(object):
 
             if not sys.stdout.isatty():  # Show error in Alfred
                 if text_errors:
-                    print(unicode(err).encode('utf-8'), end='')
+                    print(err, end='')
                 else:
                     self._items = []
                     if self._name:
@@ -2051,9 +2051,7 @@ class Workflow(object):
                         name = self._bundleid
                     else:  # pragma: no cover
                         name = os.path.dirname(__file__)
-                    self.add_item("Error in workflow '%s'" % name,
-                                  unicode(err),
-                                  icon=ICON_ERROR)
+                    self.add_item("Error in workflow '%s'" % name, err, icon=ICON_ERROR)
                     self.send_feedback()
             return 1
 
@@ -2415,7 +2413,7 @@ class Workflow(object):
             h = groups.get('hex')
             password = groups.get('pw')
             if h:
-                password = unicode(binascii.unhexlify(h), 'utf-8')
+                password = binascii.unhexlify(h)
 
         self.logger.debug('got password : %s:%s', service, account)
 
@@ -2657,8 +2655,9 @@ class Workflow(object):
         """
         encoding = encoding or self._input_encoding
         normalization = normalization or self._normalizsation
-        if not isinstance(text, unicode):
-            text = unicode(text, encoding)
+        # TODO: remove unicode?
+        # if not isinstance(text, unicode):
+        #     text = unicode(text, encoding)
         return unicodedata.normalize(normalization, text)
 
     def fold_to_ascii(self, text):
@@ -2677,8 +2676,10 @@ class Workflow(object):
         if isascii(text):
             return text
         text = ''.join([ASCII_REPLACEMENTS.get(c, c) for c in text])
-        return unicode(unicodedata.normalize('NFKD',
-                       text).encode('ascii', 'ignore'))
+
+        # TODO: remove unicode?
+        # return unicode(unicodedata.normalize('NFKD', text).encode('ascii', 'ignore'))
+        return unicodedata.normalize('NFKD', text).encode('ascii', 'ignore')
 
     def dumbify_punctuation(self, text):
         """Convert non-ASCII punctuation to closest ASCII equivalent.
