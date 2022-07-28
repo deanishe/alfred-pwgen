@@ -23,7 +23,7 @@ of them, and they won't be sent to Alfred when you call
 
 """
 
-from __future__ import print_function, unicode_literals, absolute_import
+
 
 import json
 import os
@@ -50,12 +50,16 @@ class Variables(dict):
     information.
 
     Args:
-        arg (unicode, optional): Main output/``{query}``.
+        arg (unicode or list, optional): Main output/``{query}``.
         **variables: Workflow variables to set.
 
+    In Alfred 4.1+ and Alfred-Workflow 1.40+, ``arg`` may also be a
+    :class:`list` or :class:`tuple`.
 
     Attributes:
-        arg (unicode): Output value (``{query}``).
+        arg (unicode or list): Output value (``{query}``).
+            In Alfred 4.1+ and Alfred-Workflow 1.40+, ``arg`` may also be a
+            :class:`list` or :class:`tuple`.
         config (dict): Configuration for downstream workflow element.
 
     """
@@ -68,11 +72,11 @@ class Variables(dict):
 
     @property
     def obj(self):
-        """Return ``alfredworkflow`` `dict`."""
+        """``alfredworkflow`` :class:`dict`."""
         o = {}
         if self:
             d2 = {}
-            for k, v in self.items():
+            for k, v in list(self.items()):
                 d2[k] = v
             o['variables'] = d2
 
@@ -84,7 +88,7 @@ class Variables(dict):
 
         return {'alfredworkflow': o}
 
-    def __unicode__(self):
+    def __str__(self):
         """Convert to ``alfredworkflow`` JSON object.
 
         Returns:
@@ -92,22 +96,12 @@ class Variables(dict):
 
         """
         if not self and not self.config:
-            if self.arg:
+            if not self.arg:
+                return ''
+            if isinstance(self.arg, str):
                 return self.arg
-            else:
-                return u''
 
         return json.dumps(self.obj)
-
-    # TODO: remove unicode?
-    # def __str__(self):
-    #     """Convert to ``alfredworkflow`` JSON object.
-    #
-    #     Returns:
-    #         str: UTF-8 encoded ``alfredworkflow`` JSON object
-    #
-    #     """
-    #     return unicode(self).encode('utf-8')
 
 
 class Modifier(object):
@@ -329,6 +323,9 @@ class Item3(object):
                 :meth:`Workflow.add_item() <workflow.Workflow.add_item>`
                 for valid values.
 
+        In Alfred 4.1+ and Alfred-Workflow 1.40+, ``arg`` may also be a
+        :class:`list` or :class:`tuple`.
+
         Returns:
             Modifier: Configured :class:`Modifier`.
 
@@ -439,7 +436,7 @@ class Item3(object):
         """
         if self.modifiers:
             mods = {}
-            for k, mod in self.modifiers.items():
+            for k, mod in list(self.modifiers.items()):
                 mods[k] = mod.obj
 
             return mods
@@ -569,6 +566,9 @@ class Workflow3(Workflow):
                 turned on for your Script Filter, Alfred (version 3.5 and
                 above) will filter against this field, not ``title``.
 
+        In Alfred 4.1+ and Alfred-Workflow 1.40+, ``arg`` may also be a
+        :class:`list` or :class:`tuple`.
+
         See :meth:`Workflow.add_item() <workflow.Workflow.add_item>` for
         the main documentation and other parameters.
 
@@ -690,7 +690,7 @@ class Workflow3(Workflow):
             o['rerun'] = self.rerun
         return o
 
-    def warn_empty(self, title, subtitle=u'', icon=None):
+    def warn_empty(self, title, subtitle='', icon=None):
         """Add a warning to feedback if there are no items.
 
         .. versionadded:: 1.31
@@ -718,5 +718,8 @@ class Workflow3(Workflow):
 
     def send_feedback(self):
         """Print stored items to console/Alfred as JSON."""
-        json.dump(self.obj, sys.stdout)
+        if self.debugging:
+            json.dump(self.obj, sys.stdout, indent=2, separators=(',', ': '))
+        else:
+            json.dump(self.obj, sys.stdout)
         sys.stdout.flush()

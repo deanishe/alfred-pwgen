@@ -23,7 +23,7 @@ directory. It replaces the application's icon with your workflow's
 icon and then calls the application to post notifications.
 """
 
-from __future__ import print_function, unicode_literals
+
 
 import os
 import plistlib
@@ -34,7 +34,7 @@ import tarfile
 import tempfile
 import uuid
 
-import workflow
+from . import workflow
 
 
 _wf = None
@@ -117,8 +117,8 @@ def install_notifier():
     # z.extractall(destdir)
     tgz = tarfile.open(archive, 'r:gz')
     tgz.extractall(destdir)
-    assert os.path.exists(n), \
-        'Notify.app could not be installed in %s' % destdir
+    if not os.path.exists(n):  # pragma: nocover
+        raise RuntimeError('Notify.app could not be installed in ' + destdir)
 
     # Replace applet icon
     icon = notifier_icon_path()
@@ -142,14 +142,15 @@ def install_notifier():
         ws.setIcon_forFile_options_(img, app_path, 0)
 
     # Change bundle ID of installed app
-    bundle_id = '{0}.{1}'.format(wf().bundleid, uuid.uuid4().hex)
     ip_path = os.path.join(app_path, 'Contents/Info.plist')
-    with open(ip_path, 'rb') as f:
-        data = plistlib.load(f)
+    bundle_id = '{0}.{1}'.format(wf().bundleid, uuid.uuid4().hex)
+    with open(ip_path, 'rb') as plist_fp:
+        data = plistlib.load(plist_fp)
+
     log().debug('changing bundle ID to %r', bundle_id)
     data['CFBundleIdentifier'] = bundle_id
-    # TODO remove plistlib.writePlist because it's deprecated and use smth else
-    plistlib.writePlist(data, ip_path)
+    with open(ip_path, 'wb') as plist_fp:
+        plistlib.dump(data, plist_fp)
 
 
 def validate_sound(sound):
@@ -255,8 +256,9 @@ def png_to_icns(png_path, icns_path):
     try:
         iconset = os.path.join(tempdir, 'Icon.iconset')
 
-        assert not os.path.exists(iconset), \
-            'iconset already exists: ' + iconset
+        if os.path.exists(iconset):  # pragma: nocover
+            raise RuntimeError('iconset already exists: ' + iconset)
+
         os.makedirs(iconset)
 
         # Copy source icon to icon set and generate all the other
@@ -285,8 +287,9 @@ def png_to_icns(png_path, icns_path):
         if retcode != 0:
             raise RuntimeError('iconset exited with %d' % retcode)
 
-        assert os.path.exists(icns_path), \
-            'generated ICNS file not found: ' + repr(icns_path)
+        if not os.path.exists(icns_path):  # pragma: nocover
+            raise ValueError(
+                'generated ICNS file not found: ' + repr(icns_path))
     finally:
         try:
             shutil.rmtree(tempdir)
@@ -334,8 +337,8 @@ if __name__ == '__main__':  # pragma: nocover
         print('converting {0!r} to {1!r} ...'.format(o.png, icns),
               file=sys.stderr)
 
-        assert not os.path.exists(icns), \
-            'destination file already exists: ' + icns
+        if os.path.exists(icns):
+            raise ValueError('destination file already exists: ' + icns)
 
         png_to_icns(o.png, icns)
         sys.exit(0)
