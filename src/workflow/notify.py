@@ -142,11 +142,13 @@ def install_notifier():
         ws.setIcon_forFile_options_(img, app_path, 0)
 
     # Change bundle ID of installed app
-    ip_path = os.path.join(app_path, 'Contents/Info.plist')
     bundle_id = '{0}.{1}'.format(wf().bundleid, uuid.uuid4().hex)
-    data = plistlib.readPlist(ip_path)
+    ip_path = os.path.join(app_path, 'Contents/Info.plist')
+    with open(ip_path, 'rb') as f:
+        data = plistlib.load(f)
     log().debug('changing bundle ID to %r', bundle_id)
     data['CFBundleIdentifier'] = bundle_id
+    # TODO remove plistlib.writePlist because it's deprecated and use smth else
     plistlib.writePlist(data, ip_path)
 
 

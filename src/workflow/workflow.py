@@ -2726,7 +2726,8 @@ class Workflow(object):
     def _load_info_plist(self):
         """Load workflow info from ``info.plist``."""
         # info.plist should be in the directory above this one
-        self._info = plistlib.readPlist(self.workflowfile('info.plist'))
+        with open(self.workflowfile('info.plist'), 'rb') as f:
+            self._info = plistlib.load(f)
         self._info_loaded = True
 
     def _create(self, dirpath):
