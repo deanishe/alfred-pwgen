@@ -14,12 +14,12 @@ Generate password from (mostly) gibberish words.
 http://stackoverflow.com/a/5502875/356942
 """
 
-from __future__ import print_function, unicode_literals, absolute_import
+
 
 import itertools
 import string
 
-from generators import WordGenBase
+from . import WordGenBase
 
 
 initial_consonants = (
@@ -64,10 +64,8 @@ class PronounceableGenerator(WordGenBase):
     def data(self):
         if not self._syllables:
             # each syllable is consonant-vowel-consonant "pronounceable"
-            self._syllables = map(''.join,
-                                  itertools.product(initial_consonants,
-                                                    vowels,
-                                                    final_consonants))
+            self._syllables = list(map(''.join, itertools.product(initial_consonants, vowels, final_consonants)))
+
         return self._syllables
 
     @property

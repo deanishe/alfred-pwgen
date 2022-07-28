@@ -51,7 +51,7 @@ function run(argv) {
 
 def nsdata(obj):
     """Convert ``object`` to `NSData`."""
-    if isinstance(obj, unicode):
+    if isinstance(obj, str):
         s = obj.encode('utf-8')
     else:
         s = str(obj)
@@ -80,7 +80,7 @@ def copy(data, uti='public.utf8-plain-text', private=True):
     pboard.clearContents()
 
     for uti, data in pbdata.items():
-        if isinstance(uti, unicode):
+        if isinstance(uti, str):
             uti = uti.encode('utf-8')
 
         pboard.setData_forType_(nsdata(data), uti)

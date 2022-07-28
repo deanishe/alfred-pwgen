@@ -32,7 +32,7 @@ Options:
 
 """
 
-from __future__ import print_function, unicode_literals, absolute_import
+
 
 import logging
 import os
@@ -135,7 +135,7 @@ def entropy_from_strength(strength):
     treat as level and multiply by ``ENTROPY_PER_LEVEL``.
 
     """
-    if not isinstance(strength, basestring):
+    if not isinstance(strength, str):
         strength = str(strength)
     strength = strength.strip()
     if not strength:
@@ -289,8 +289,9 @@ class PasswordApp(object):
                         icon=ICON_WARNING)
 
         for g in generators:
-            log.debug('[%0.2f/%s] %s : %s',
-                      g.entropy, g.id, g.name, g.description)
+            log.debug('[%s] %s : %s', g.id, g.name, g.description)
+            # log.debug('[%0.2f/%s] %s : %s',
+            #           g.entropy, g.id, g.name, g.description)
             # log.debug('[%s] %s', g.id, g.password())
             if mode == 'length':
                 pw, entropy = g.password(length=pw_length)
