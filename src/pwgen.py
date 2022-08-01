@@ -201,22 +201,6 @@ class PasswordApp(object):
         else:  # Import user generators
             import_generators(user_generator_dir)
 
-    def do_notify(self):
-        """Show a notification."""
-        wf = self.wf
-        args = self.args
-        msg = args.get('<message>')
-        if wf.settings.get('suppress_notifications'):
-            log.debug('Notifications turned off')
-            return
-
-        if msg.strip() == '':
-            log.debug('Empty notification')
-            return
-
-        from workflow.notify import notify
-        notify('Password Generator', msg)
-
     def do_generate(self):
         """Generate and display passwords from active generators."""
         wf = self.wf
@@ -461,27 +445,6 @@ class PasswordApp(object):
 
         wf.send_feedback()
         return 0
-
-    def do_copy(self):
-        """Securely copy (and optionally paste) password to pasteboard.
-
-        Mark pasteboard data as concealed so clipboard history managers
-        ignore them.
-
-        """
-        import pasteboard as pb
-
-        password = self.args['<password>']
-        if not password:
-            raise ValueError('Password is empty')
-
-        pb.copy(password, private=True)
-        log.info('password copied to clipboard')
-
-        if self.args['--paste']:
-            # time.sleep(0.1)  # give copy time to complete
-            log.debug('pasting ...')
-            pb.paste()
 
     def do_set(self):
         """Set password strength/length."""
