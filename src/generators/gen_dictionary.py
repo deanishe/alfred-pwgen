@@ -12,10 +12,9 @@
 A password generator based on the contents of ``/usr/share/dict/words``
 """
 
-from __future__ import print_function, unicode_literals, absolute_import
 
 
-from generators import WordGenBase
+from . import WordGenBase
 
 
 class WordlistGenerator(WordGenBase):
@@ -39,7 +38,7 @@ class WordlistGenerator(WordGenBase):
     def data(self):
         if not self._words:
             words = set()
-            with open(self._filepath, 'rb') as fp:
+            with open(self._filepath, 'r') as fp:
                 for line in fp:
                     line = line.strip()
                     if not line or len(line) > self._maxlen:

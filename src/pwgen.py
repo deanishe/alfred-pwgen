@@ -32,7 +32,7 @@ Options:
 
 """
 
-from __future__ import print_function, unicode_literals, absolute_import
+
 
 import logging
 import os
@@ -135,7 +135,7 @@ def entropy_from_strength(strength):
     treat as level and multiply by ``ENTROPY_PER_LEVEL``.
 
     """
-    if not isinstance(strength, basestring):
+    if not isinstance(strength, str):
         strength = str(strength)
     strength = strength.strip()
     if not strength:
@@ -197,25 +197,9 @@ class PasswordApp(object):
 
         # Create user generator directory
         if not os.path.exists(user_generator_dir):
-            os.makedirs(user_generator_dir, 0700)
+            os.makedirs(user_generator_dir, 0o700)
         else:  # Import user generators
             import_generators(user_generator_dir)
-
-    def do_notify(self):
-        """Show a notification."""
-        wf = self.wf
-        args = self.args
-        msg = args.get('<message>')
-        if wf.settings.get('suppress_notifications'):
-            log.debug('Notifications turned off')
-            return
-
-        if msg.strip() == '':
-            log.debug('Empty notification')
-            return
-
-        from workflow.notify import notify
-        notify('Password Generator', msg)
 
     def do_generate(self):
         """Generate and display passwords from active generators."""
@@ -289,8 +273,9 @@ class PasswordApp(object):
                         icon=ICON_WARNING)
 
         for g in generators:
-            log.debug('[%0.2f/%s] %s : %s',
-                      g.entropy, g.id, g.name, g.description)
+            log.debug('[%s] %s : %s', g.id, g.name, g.description)
+            # log.debug('[%0.2f/%s] %s : %s',
+            #           g.entropy, g.id, g.name, g.description)
             # log.debug('[%s] %s', g.id, g.password())
             if mode == 'length':
                 pw, entropy = g.password(length=pw_length)
@@ -460,27 +445,6 @@ class PasswordApp(object):
 
         wf.send_feedback()
         return 0
-
-    def do_copy(self):
-        """Securely copy (and optionally paste) password to pasteboard.
-
-        Mark pasteboard data as concealed so clipboard history managers
-        ignore them.
-
-        """
-        import pasteboard as pb
-
-        password = self.args['<password>']
-        if not password:
-            raise ValueError('Password is empty')
-
-        pb.copy(password, private=True)
-        log.info('password copied to clipboard')
-
-        if self.args['--paste']:
-            # time.sleep(0.1)  # give copy time to complete
-            log.debug('pasting ...')
-            pb.paste()
 
     def do_set(self):
         """Set password strength/length."""

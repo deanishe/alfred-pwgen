@@ -9,7 +9,7 @@
 # Created on 2016-02-24
 #
 
-from generators import PassGenBase
+from . import PassGenBase
 
 
 class HexGenerator(PassGenBase):

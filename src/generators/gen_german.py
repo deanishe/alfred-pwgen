@@ -16,11 +16,10 @@ extended with German letters.
 
 """
 
-from __future__ import print_function, unicode_literals, absolute_import
+
 
 from .gen_basic import AsciiGenerator, AlphanumGenerator
 from .gen_pronounceable_markov import PronounceableMarkovGenerator
-
 
 # Umlauts, lovely umlauts
 german_chars = 'ÄäÖöÜüß'

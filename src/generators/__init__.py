@@ -22,12 +22,7 @@ in order to be recognised by the workflow.
 
 """
 
-from __future__ import (
-    print_function,
-    unicode_literals,
-    absolute_import,
-    division
-)
+
 
 import abc
 import logging
@@ -90,13 +85,13 @@ class PassGenBase(object):
             length = int(math.ceil(strength / self.entropy))
 
         chars = self.data
-        pw = [chars[ord(c) % len(chars)] for c in os.urandom(length)]
+        pw = [chars[c % len(chars)] for c in os.urandom(length)]
         return ''.join(pw), self.entropy * length
 
     @property
     def entropy(self):
         """Entropy per element (character word) in bits."""
-        return math.log(len(self.data), 2)
+        return math.log(len(list(self.data)), 2)
 
     @abc.abstractproperty
     def id(self):
@@ -146,7 +141,6 @@ class WordGenBase(PassGenBase):
 
     def _password_by_iterations(self, iterations):
         """Return password using ``iterations`` iterations."""
-        words = []
         rand = random.SystemRandom()
         words = [rand.choice(self.data) for i in range(iterations)]
         return '-'.join(words), self.entropy * iterations
@@ -251,6 +245,10 @@ def get_generators():
         # Ignore base classes
         if klass.__name__ == 'WordGenBase':
             continue
+
+        # TODO: fix ignored generators
+        # if klass.__name__ in ['PronounceableGenerator']:
+        #     continue
 
         try:
             inst = klass()

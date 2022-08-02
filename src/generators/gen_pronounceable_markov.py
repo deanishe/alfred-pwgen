@@ -16,12 +16,7 @@ The Markov chain is based on the first few paragraphs of
 
 """
 
-from __future__ import (
-    print_function,
-    unicode_literals,
-    absolute_import,
-    division
-)
+
 
 from collections import defaultdict
 import itertools
@@ -29,7 +24,7 @@ import os
 import string
 import random
 
-from generators import WordGenBase
+from . import WordGenBase
 
 
 # Markov chain code from

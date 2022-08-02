@@ -17,11 +17,11 @@ of ``PassGenBase`` to generate the passwords.
 
 """
 
-from __future__ import print_function, unicode_literals, absolute_import
+
 
 import string
 
-from generators import PassGenBase, punctuation
+from . import PassGenBase, punctuation
 
 
 class AsciiGenerator(PassGenBase):
